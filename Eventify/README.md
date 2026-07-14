@@ -4,6 +4,10 @@ A full-stack event registration platform built with **React** and **Salesforce**
 
 Visitors browse upcoming events and reserve seats on a public page — no account required — while organizers sign in to an admin console to manage events, track capacity, and check attendees in. All data lives in Salesforce as **custom objects** with a master-detail relationship.
 
+![Eventify screenshot](docs/screenshot.png)
+
+▶️ **[Watch the demo](https://youtu.be/5acgQzWXq8A)**
+
 ---
 
 ## Data Model (custom objects)

@@ -2,6 +2,10 @@
 
 A **Salesforce solution** to a SaaS company's revenue problem, built with an enterprise **layered architecture**, **scheduled record-generation**, and live **financial roll-ups**.
 
+![RenewFlow screenshot](docs/screenshot.png)
+
+▶️ **[Watch the demo](https://youtu.be/p0z3XBGUbN8)**
+
 ---
 
 ## The client problem

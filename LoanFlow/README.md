@@ -2,6 +2,10 @@
 
 A **Salesforce solution** to a lending client's problem, built with an enterprise **layered architecture** and a config-driven **rules & decisioning engine**.
 
+![LoanFlow screenshot](docs/screenshot.png)
+
+▶️ **[Watch the demo](https://youtu.be/cSrA7TNs2D8)**
+
 ---
 
 ## The client problem

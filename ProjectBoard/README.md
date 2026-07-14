@@ -2,6 +2,10 @@
 
 A drag-and-drop project Kanban board **written in React and hosted entirely inside Salesforce**. Unlike a normal full-stack app, there is **no separate server or hosting** — the React app is bundled into a single JavaScript file, uploaded as a **Static Resource**, loaded by a thin **Lightning Web Component**, and talks to Salesforce through **Apex**.
 
+![ProjectBoard screenshot](docs/screenshot.png)
+
+▶️ **[Watch the demo](https://youtu.be/6F_RijDx6nA)**
+
 ---
 
 ## The architecture

@@ -4,6 +4,10 @@ A full-stack customer support ticketing application built with **React** and **S
 
 Support agents authenticate with their Salesforce credentials and manage the complete ticket lifecycle — creation, triage, status updates, and resolution — from a modern web interface, while all data lives natively in Salesforce as standard **Case** records.
 
+![ServiceDesk screenshot](docs/screenshot.png)
+
+▶️ **[Watch the demo](https://youtu.be/c6_8GpB686g)**
+
 ---
 
 ## Architecture

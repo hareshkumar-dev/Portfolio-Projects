@@ -2,6 +2,10 @@
 
 A **100% Salesforce** inventory application — no external frontend or server. It showcases **asynchronous Apex**: a Batchable job that scans every stock item and classifies it against its reorder point, a Schedulable that runs the job nightly, and a Lightning Web Component dashboard to view stock health and trigger a scan on demand.
 
+![AssetTracker screenshot](docs/screenshot.png)
+
+▶️ **[Watch the demo](https://youtu.be/pNPTth9Zfxs)**
+
 ---
 
 ## What it demonstrates (asynchronous + native Salesforce)

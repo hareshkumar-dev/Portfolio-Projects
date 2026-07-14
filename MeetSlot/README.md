@@ -2,6 +2,10 @@
 
 A monthly team calendar **written in React and hosted entirely inside Salesforce**. Like ProjectBoard, there is no external server or hosting: the React app is bundled into a single JavaScript file, uploaded as a **Static Resource**, loaded by a thin **Lightning Web Component**, and talks to Salesforce through **Apex**. Meetings live in a `Meeting__c` custom object.
 
+![MeetSlot screenshot](docs/screenshot.png)
+
+▶️ **[Watch the demo](https://youtu.be/w8g1pQIpkQ0)**
+
 ---
 
 ## The architecture

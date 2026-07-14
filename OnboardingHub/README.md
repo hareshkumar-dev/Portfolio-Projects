@@ -2,6 +2,10 @@
 
 A **100% Salesforce** employee-onboarding application — no external frontend or server. Its signature is **declarative automation with a Record-Triggered Flow**: creating a New Hire record automatically generates their onboarding checklist. An Apex trigger rolls task completion back up to a **% complete**, and a Lightning Web Component gives HR a progress tracker.
 
+![OnboardingHub screenshot](docs/screenshot.png)
+
+▶️ **[Watch the demo](https://youtu.be/Msbqaj4Jbcc)**
+
 ---
 
 ## What it demonstrates (Flow + native Salesforce)

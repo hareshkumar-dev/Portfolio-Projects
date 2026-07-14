@@ -2,6 +2,10 @@
 
 A **100% Salesforce** order-tracking app built on **Platform Events**. When an order's status changes, Apex *publishes* an event; a decoupled *subscriber* trigger reacts by writing an audit-history record. This is the event-driven publish/subscribe pattern that underpins modern enterprise Salesforce architectures.
 
+![EventRelay screenshot](docs/screenshot.png)
+
+▶️ **[Watch the demo](https://youtu.be/Y6U0b2wRAlk)**
+
 ---
 
 ## The pattern

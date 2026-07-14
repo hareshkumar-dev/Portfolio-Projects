@@ -4,6 +4,10 @@ A full-stack e-commerce application built with **React** and **Salesforce**, con
 
 Shoppers browse a product catalog, add items to a cart, and check out — with no account required — then track their orders through fulfillment (Placed → Packed → Shipped → Delivered). Store operators sign in to a console to manage and advance every order. All commerce data lives in Salesforce using the standard **Product2 / PricebookEntry / Order / OrderItem** model.
 
+![ShopTrack screenshot](docs/screenshot.png)
+
+▶️ **[Watch the demo](https://youtu.be/krg-eNJN6o4)**
+
 ---
 
 ## Why this project is interesting

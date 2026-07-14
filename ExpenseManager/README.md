@@ -4,6 +4,10 @@ A **100% Salesforce** expense-management application — no external frontend or
 
 Employees create expense reports, add line items, and submit them for approval. A manager approves or rejects. Totals stay correct automatically, and business rules are enforced by the platform.
 
+![ExpenseManager screenshot](docs/screenshot.png)
+
+▶️ **[Watch the demo](https://youtu.be/9zTwGS_E7iQ)**
+
 ---
 
 ## What it demonstrates (the native Salesforce stack)
