@@ -4,7 +4,7 @@ A collection of 17 apps I built on the **Salesforce Platform** — from Lightnin
 Apex inside the org, to full-stack **React + Node** integrations over the Salesforce API. Every app
 runs on live Salesforce data with production-quality UI.
 
-**Live portfolio:** _add your deployed link_ · **Demos:** every project below links to a video walkthrough.
+**Live portfolio:** https://hareshkumar-dev.github.io/Portfolio-Projects/ · **Demos:** every project below links to a video walkthrough.
 
 > **Stack across the repo:** LWC · Apex (triggers, batch, schedulers, Platform Events, state machines) ·
 > custom objects · React (Vite) · Node/Express · jsforce · OAuth 2.0 (PKCE) · SOQL
@@ -53,7 +53,7 @@ React bundles mounted inside a Lightning page via a light-DOM bridge to Apex.
    ├─ salesforce/ …      # for full-stack apps
    ├─ client/  server/   # React + Node tiers (full-stack apps)
    └─ docs/screenshot.png
-portfolio-site/          # the static portfolio website (deployable to any host)
+docs/                    # the static portfolio website (served by GitHub Pages)
 ```
 
 ## Running an app locally
