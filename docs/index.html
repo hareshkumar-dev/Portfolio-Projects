@@ -6,278 +6,362 @@
 <title>Haresh Prajapati — Salesforce Developer</title>
 <meta name="description" content="Salesforce Developer building custom Lightning (LWC/Apex) apps and full-stack Salesforce integrations with React & Node. 17 shipped apps." />
 <style>
-  /* ============ Tokens ============ */
+  /* ============================ Tokens ============================ */
   :root {
     color-scheme: light dark;
-    --bg: #f6f7f9;
+    --bg: #fbfbfd;
     --surface: #ffffff;
-    --surface-2: #f0f2f5;
-    --ink: #171a1f;
-    --ink-2: #444b56;
-    --muted: #6b7280;
-    --border: #e4e7ec;
-    --accent: #2457e6;
-    --accent-ink: #ffffff;
-    --shadow: 0 1px 2px rgba(16,24,40,.06), 0 1px 3px rgba(16,24,40,.05);
-    --shadow-lg: 0 18px 40px rgba(16,24,40,.14);
+    --surface-2: #f4f5f8;
+    --ink: #0c0e14;
+    --ink-2: #3d4453;
+    --muted: #6c7484;
+    --border: #e7e9ef;
+    --border-strong: #d8dbe3;
+    --accent: #2b5cf0;
+    --accent-2: #12b3a6;
+    --accent-soft: rgba(43, 92, 240, .09);
+    --dot: rgba(12, 14, 20, .05);
+    --shadow-sm: 0 1px 2px rgba(16, 24, 40, .05), 0 1px 3px rgba(16, 24, 40, .05);
+    --shadow-md: 0 8px 24px rgba(16, 24, 40, .08);
+    --shadow-lg: 0 24px 60px rgba(16, 24, 40, .16);
     --mono: ui-monospace, "SF Mono", "Cascadia Code", "JetBrains Mono", Consolas, monospace;
     --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, Roboto, Helvetica, Arial, sans-serif;
-    --radius: 14px;
-    --maxw: 1180px;
+    --r: 16px; --r-sm: 10px; --maxw: 1200px;
   }
   @media (prefers-color-scheme: dark) {
     :root {
-      --bg: #0e1116; --surface: #161a21; --surface-2: #1c212a;
-      --ink: #e8ebf0; --ink-2: #c1c7d0; --muted: #8b95a4;
-      --border: #262c36; --accent: #6f95ff; --accent-ink: #0b1220;
-      --shadow: 0 1px 2px rgba(0,0,0,.4);
-      --shadow-lg: 0 20px 50px rgba(0,0,0,.55);
+      --bg: #0a0c11; --surface: #12151c; --surface-2: #171b24;
+      --ink: #eef1f6; --ink-2: #c3c9d4; --muted: #838c9c;
+      --border: #222833; --border-strong: #2d343f;
+      --accent: #6f9bff; --accent-2: #3ad0c3; --accent-soft: rgba(111, 155, 255, .12);
+      --dot: rgba(255, 255, 255, .05);
+      --shadow-sm: 0 1px 2px rgba(0, 0, 0, .4);
+      --shadow-md: 0 10px 30px rgba(0, 0, 0, .45);
+      --shadow-lg: 0 28px 70px rgba(0, 0, 0, .6);
     }
   }
   :root[data-theme="light"] {
     color-scheme: light;
-    --bg: #f6f7f9; --surface: #ffffff; --surface-2: #f0f2f5;
-    --ink: #171a1f; --ink-2: #444b56; --muted: #6b7280; --border: #e4e7ec;
-    --accent: #2457e6; --accent-ink: #ffffff;
-    --shadow: 0 1px 2px rgba(16,24,40,.06), 0 1px 3px rgba(16,24,40,.05);
-    --shadow-lg: 0 18px 40px rgba(16,24,40,.14);
+    --bg: #fbfbfd; --surface: #ffffff; --surface-2: #f4f5f8;
+    --ink: #0c0e14; --ink-2: #3d4453; --muted: #6c7484;
+    --border: #e7e9ef; --border-strong: #d8dbe3;
+    --accent: #2b5cf0; --accent-2: #12b3a6; --accent-soft: rgba(43, 92, 240, .09);
+    --dot: rgba(12, 14, 20, .05);
+    --shadow-sm: 0 1px 2px rgba(16, 24, 40, .05), 0 1px 3px rgba(16, 24, 40, .05);
+    --shadow-md: 0 8px 24px rgba(16, 24, 40, .08);
+    --shadow-lg: 0 24px 60px rgba(16, 24, 40, .16);
   }
   :root[data-theme="dark"] {
     color-scheme: dark;
-    --bg: #0e1116; --surface: #161a21; --surface-2: #1c212a;
-    --ink: #e8ebf0; --ink-2: #c1c7d0; --muted: #8b95a4;
-    --border: #262c36; --accent: #6f95ff; --accent-ink: #0b1220;
-    --shadow: 0 1px 2px rgba(0,0,0,.4);
-    --shadow-lg: 0 20px 50px rgba(0,0,0,.55);
+    --bg: #0a0c11; --surface: #12151c; --surface-2: #171b24;
+    --ink: #eef1f6; --ink-2: #c3c9d4; --muted: #838c9c;
+    --border: #222833; --border-strong: #2d343f;
+    --accent: #6f9bff; --accent-2: #3ad0c3; --accent-soft: rgba(111, 155, 255, .12);
+    --dot: rgba(255, 255, 255, .05);
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, .4);
+    --shadow-md: 0 10px 30px rgba(0, 0, 0, .45);
+    --shadow-lg: 0 28px 70px rgba(0, 0, 0, .6);
   }
 
-  /* ============ Base ============ */
+  /* ============================ Base ============================ */
   * { box-sizing: border-box; }
   html { scroll-behavior: smooth; }
   body {
     margin: 0; background: var(--bg); color: var(--ink);
-    font-family: var(--sans);
-    font-size: 16px; line-height: 1.55;
-    -webkit-font-smoothing: antialiased;
+    font-family: var(--sans); font-size: 16px; line-height: 1.55;
+    -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
+    overflow-x: hidden;
   }
   a { color: inherit; text-decoration: none; }
-  .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
-  .mono { font-family: var(--mono); }
+  .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 28px; }
   .eyebrow {
-    font-family: var(--mono); font-size: 12px; letter-spacing: .12em;
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: var(--mono); font-size: 12px; letter-spacing: .14em;
     text-transform: uppercase; color: var(--muted);
   }
+  .eyebrow .pip { width: 7px; height: 7px; border-radius: 50%; background: var(--accent-2); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent-2) 22%, transparent); }
+  section { scroll-margin-top: 84px; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 6px; }
 
-  /* ============ Header ============ */
+  /* ============================ Header ============================ */
   header.site {
-    position: sticky; top: 0; z-index: 20;
-    background: color-mix(in srgb, var(--bg) 86%, transparent);
-    backdrop-filter: saturate(1.4) blur(10px);
-    border-bottom: 1px solid var(--border);
+    position: sticky; top: 0; z-index: 30;
+    background: color-mix(in srgb, var(--bg) 82%, transparent);
+    backdrop-filter: saturate(1.6) blur(12px);
+    border-bottom: 1px solid transparent; transition: border-color .3s;
   }
-  .site .wrap { display: flex; align-items: center; gap: 16px; height: 62px; }
-  .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; letter-spacing: -.01em; }
-  .brand .dot {
-    width: 26px; height: 26px; border-radius: 7px; display: grid; place-items: center;
-    background: linear-gradient(135deg, var(--accent), color-mix(in srgb, var(--accent) 55%, #12b3a6));
-    color: var(--accent-ink); font-family: var(--mono); font-size: 13px; font-weight: 700;
+  header.site.scrolled { border-bottom-color: var(--border); }
+  header.site .wrap { display: flex; align-items: center; gap: 16px; height: 64px; }
+  .brand { display: flex; align-items: center; gap: 11px; font-weight: 700; letter-spacing: -.01em; font-size: 15px; }
+  .brand .mark {
+    width: 30px; height: 30px; border-radius: 9px; display: grid; place-items: center;
+    background: linear-gradient(140deg, var(--accent), var(--accent-2));
+    color: #fff; font-family: var(--mono); font-size: 12.5px; font-weight: 700;
+    box-shadow: 0 4px 12px color-mix(in srgb, var(--accent) 40%, transparent);
   }
-  .site nav { margin-left: auto; display: flex; align-items: center; gap: 4px; }
+  .site nav { margin-left: auto; display: flex; align-items: center; gap: 2px; }
   .site nav a {
-    font-family: var(--mono); font-size: 12.5px; letter-spacing: .04em;
-    color: var(--ink-2); padding: 8px 11px; border-radius: 8px;
+    font-family: var(--mono); font-size: 12.5px; letter-spacing: .03em;
+    color: var(--ink-2); padding: 9px 12px; border-radius: 8px; transition: .15s;
   }
   .site nav a:hover { color: var(--ink); background: var(--surface-2); }
+  .site nav a.avail { color: var(--accent); }
   .toggle {
-    margin-left: 6px; width: 34px; height: 34px; border-radius: 9px;
+    margin-left: 8px; width: 36px; height: 36px; border-radius: 10px;
     border: 1px solid var(--border); background: var(--surface); color: var(--ink-2);
-    cursor: pointer; display: grid; place-items: center;
+    cursor: pointer; display: grid; place-items: center; font-size: 15px; transition: .15s;
   }
-  .toggle:hover { color: var(--ink); }
+  .toggle:hover { color: var(--ink); border-color: var(--border-strong); }
 
-  /* ============ Hero ============ */
-  .hero { padding: 72px 0 40px; }
+  /* ============================ Hero ============================ */
+  .hero { position: relative; padding: 96px 0 56px; overflow: hidden; }
+  .hero-bg {
+    position: absolute; inset: 0; z-index: 0; pointer-events: none;
+    background-image: radial-gradient(var(--dot) 1.2px, transparent 1.2px);
+    background-size: 26px 26px;
+    -webkit-mask-image: radial-gradient(120% 90% at 15% 0%, #000 25%, transparent 72%);
+            mask-image: radial-gradient(120% 90% at 15% 0%, #000 25%, transparent 72%);
+  }
+  .hero-glow {
+    position: absolute; z-index: 0; top: -160px; right: -120px; width: 620px; height: 620px;
+    border-radius: 50%; pointer-events: none; filter: blur(20px); opacity: .5;
+    background: radial-gradient(circle at center, color-mix(in srgb, var(--accent) 26%, transparent), transparent 62%);
+  }
+  .hero .wrap { position: relative; z-index: 1; }
   .hero h1 {
-    font-size: clamp(34px, 6vw, 58px); line-height: 1.03; letter-spacing: -.025em;
-    margin: 16px 0 0; font-weight: 800; text-wrap: balance; max-width: 16ch;
+    font-size: clamp(36px, 6.4vw, 64px); line-height: 1.02; letter-spacing: -.03em;
+    margin: 20px 0 0; font-weight: 800; text-wrap: balance; max-width: 17ch;
   }
-  .hero .lede {
-    margin: 20px 0 0; font-size: clamp(17px, 2.2vw, 20px); color: var(--ink-2);
-    max-width: 60ch;
+  .hero h1 .grad {
+    background: linear-gradient(120deg, var(--accent), var(--accent-2));
+    -webkit-background-clip: text; background-clip: text; color: transparent;
   }
+  .hero .lede { margin: 22px 0 0; font-size: clamp(16px, 2.1vw, 19px); color: var(--ink-2); max-width: 58ch; }
   .hero .lede b { color: var(--ink); font-weight: 600; }
-  .stats { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
-  .stat {
-    background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
-    padding: 12px 16px; box-shadow: var(--shadow); min-width: 120px;
-  }
-  .stat b { display: block; font-size: 22px; font-weight: 800; letter-spacing: -.02em; }
-  .stat span { font-family: var(--mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
-  .cta-row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
+  .stats { display: flex; flex-wrap: wrap; gap: 0; margin-top: 34px; border: 1px solid var(--border); border-radius: var(--r); overflow: hidden; background: var(--surface); box-shadow: var(--shadow-sm); width: fit-content; max-width: 100%; }
+  .stat { padding: 14px 22px; border-right: 1px solid var(--border); }
+  .stat:last-child { border-right: 0; }
+  .stat b { display: block; font-size: 21px; font-weight: 800; letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
+  .stat span { font-family: var(--mono); font-size: 10.5px; letter-spacing: .09em; text-transform: uppercase; color: var(--muted); }
+  .cta-row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
   .btn {
-    display: inline-flex; align-items: center; gap: 8px; height: 44px; padding: 0 18px;
-    border-radius: 10px; font-weight: 600; font-size: 14.5px; cursor: pointer; border: 1px solid transparent;
+    display: inline-flex; align-items: center; gap: 8px; height: 46px; padding: 0 20px;
+    border-radius: 11px; font-weight: 600; font-size: 14.5px; cursor: pointer;
+    border: 1px solid transparent; transition: .16s;
   }
-  .btn.primary { background: var(--accent); color: var(--accent-ink); }
-  .btn.primary:hover { filter: brightness(1.06); transform: translateY(-1px); }
-  .btn.ghost { background: var(--surface); color: var(--ink); border-color: var(--border); }
-  .btn.ghost:hover { background: var(--surface-2); }
+  .btn.primary { background: var(--accent); color: #fff; box-shadow: 0 6px 18px color-mix(in srgb, var(--accent) 34%, transparent); }
+  .btn.primary:hover { transform: translateY(-2px); box-shadow: 0 10px 26px color-mix(in srgb, var(--accent) 42%, transparent); }
+  .btn.ghost { background: var(--surface); color: var(--ink); border-color: var(--border-strong); }
+  .btn.ghost:hover { background: var(--surface-2); transform: translateY(-2px); }
 
-  /* ============ Filter bar ============ */
-  .controls {
-    display: flex; align-items: center; flex-wrap: wrap; gap: 10px;
-    margin: 8px 0 26px; padding-top: 26px; border-top: 1px solid var(--border);
-  }
-  .controls .eyebrow { margin-right: 6px; }
+  /* ============================ Section head ============================ */
+  .sec-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin: 20px 0 24px; }
+  .sec-head h2 { font-size: clamp(23px, 3.4vw, 31px); letter-spacing: -.025em; margin: 10px 0 0; font-weight: 800; text-wrap: balance; }
+  .sec-head p { margin: 6px 0 0; color: var(--muted); font-size: 14.5px; }
+  .controls { display: flex; align-items: center; flex-wrap: wrap; gap: 9px; }
   .chip {
-    font-family: var(--mono); font-size: 12.5px; letter-spacing: .02em;
-    padding: 7px 13px; border-radius: 999px; border: 1px solid var(--border);
-    background: var(--surface); color: var(--ink-2); cursor: pointer;
+    font-family: var(--mono); font-size: 12px; letter-spacing: .01em;
+    padding: 8px 14px; border-radius: 999px; border: 1px solid var(--border-strong);
+    background: var(--surface); color: var(--ink-2); cursor: pointer; transition: .15s;
   }
   .chip[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
-  .chip:hover:not([aria-pressed="true"]) { color: var(--ink); }
-  .chip .n { opacity: .55; margin-left: 4px; }
+  .chip:hover:not([aria-pressed="true"]) { color: var(--ink); border-color: var(--muted); }
+  .chip .n { opacity: .5; margin-left: 5px; font-variant-numeric: tabular-nums; }
 
-  /* ============ Grid ============ */
-  .grid {
-    display: grid; grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
-    gap: 22px; padding-bottom: 40px;
-  }
+  /* ============================ Grid + cards ============================ */
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 24px; padding-bottom: 20px; }
   .card {
-    background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
-    overflow: hidden; box-shadow: var(--shadow); display: flex; flex-direction: column;
-    transition: transform .16s ease, box-shadow .16s ease, border-color .16s ease;
+    position: relative; background: var(--surface); border: 1px solid var(--border); border-radius: var(--r);
+    overflow: hidden; box-shadow: var(--shadow-sm); display: flex; flex-direction: column;
+    transition: transform .22s cubic-bezier(.2,.7,.2,1), box-shadow .22s, border-color .22s;
   }
-  .card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); border-color: color-mix(in srgb, var(--accent) 40%, var(--border)); }
-  .shot { position: relative; aspect-ratio: 16/10; overflow: hidden; background: var(--surface-2); border-bottom: 1px solid var(--border); }
-  .shot img { width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; }
+  .card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); border-color: color-mix(in srgb, var(--accent) 45%, var(--border)); }
+  .shot { position: relative; aspect-ratio: 16 / 10; overflow: hidden; background: var(--surface-2); border-bottom: 1px solid var(--border); }
+  .shot img { width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; transition: transform .5s cubic-bezier(.2,.7,.2,1); }
+  .card:hover .shot img { transform: scale(1.045); }
+  .shot::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, color-mix(in srgb, var(--ink) 42%, transparent), transparent 42%); opacity: 0; transition: opacity .22s; }
+  .card:hover .shot::after { opacity: 1; }
   .tag-group {
-    position: absolute; top: 10px; left: 10px;
-    font-family: var(--mono); font-size: 10.5px; letter-spacing: .06em; text-transform: uppercase;
-    background: color-mix(in srgb, var(--surface) 82%, transparent); backdrop-filter: blur(4px);
-    color: var(--ink-2); padding: 4px 9px; border-radius: 999px; border: 1px solid var(--border);
+    position: absolute; top: 12px; left: 12px; z-index: 2;
+    font-family: var(--mono); font-size: 10px; letter-spacing: .07em; text-transform: uppercase;
+    background: color-mix(in srgb, var(--surface) 78%, transparent); backdrop-filter: blur(6px);
+    color: var(--ink-2); padding: 5px 10px; border-radius: 999px; border: 1px solid var(--border);
   }
-  .card-body { padding: 16px 17px 17px; display: flex; flex-direction: column; gap: 9px; flex: 1; }
-  .card-body h3 { margin: 0; font-size: 17.5px; font-weight: 700; letter-spacing: -.01em; }
-  .card-body p { margin: 0; font-size: 14px; color: var(--ink-2); line-height: 1.5; flex: 1; }
-  .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 2px; }
-  .tags span {
-    font-family: var(--mono); font-size: 11px; color: var(--muted);
-    background: var(--surface-2); padding: 3px 8px; border-radius: 6px;
+  .play {
+    position: absolute; z-index: 2; left: 12px; bottom: 12px;
+    display: inline-flex; align-items: center; gap: 7px; font-size: 12.5px; font-weight: 600; color: #fff;
+    opacity: 0; transform: translateY(6px); transition: .22s;
   }
-  .links { display: flex; gap: 8px; margin-top: 6px; }
-  .links a {
-    flex: 1; text-align: center; font-size: 13px; font-weight: 600; padding: 9px 10px; border-radius: 9px;
-    border: 1px solid var(--border); color: var(--ink); display: inline-flex; align-items: center; justify-content: center; gap: 6px;
-  }
-  .links a.demo { background: var(--accent); color: var(--accent-ink); border-color: transparent; }
-  .links a.demo:hover { filter: brightness(1.06); }
-  .links a.code:hover { background: var(--surface-2); }
-  .links a[data-empty="1"] { opacity: .5; pointer-events: none; }
+  .card:hover .play { opacity: 1; transform: none; }
+  .play .disc { width: 26px; height: 26px; border-radius: 50%; background: var(--accent); display: grid; place-items: center; box-shadow: 0 4px 12px rgba(0,0,0,.35); }
+  .card-body { padding: 17px 18px 18px; display: flex; flex-direction: column; gap: 10px; flex: 1; }
+  .card-body h3 { margin: 0; font-size: 18px; font-weight: 700; letter-spacing: -.015em; }
+  .card-body p { margin: 0; font-size: 13.75px; color: var(--ink-2); line-height: 1.5; flex: 1; }
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .tags span { font-family: var(--mono); font-size: 10.5px; color: var(--muted); background: var(--surface-2); padding: 4px 9px; border-radius: 7px; border: 1px solid var(--border); }
+  .links { display: flex; gap: 9px; margin-top: 4px; }
+  .links a { flex: 1; text-align: center; font-size: 13px; font-weight: 600; padding: 10px; border-radius: var(--r-sm); border: 1px solid var(--border-strong); color: var(--ink); display: inline-flex; align-items: center; justify-content: center; gap: 6px; transition: .15s; }
+  .links a.demo { background: var(--accent); color: #fff; border-color: transparent; flex: 1.4; }
+  .links a.demo:hover { filter: brightness(1.07); }
+  .links a.code:hover { background: var(--surface-2); border-color: var(--muted); }
+  .links a[data-empty="1"] { opacity: .45; pointer-events: none; }
 
-  /* ============ Footer ============ */
-  footer.site {
-    border-top: 1px solid var(--border); margin-top: 20px; padding: 54px 0 60px; background: var(--surface);
-  }
-  footer .cta-h { font-size: clamp(24px, 4vw, 34px); font-weight: 800; letter-spacing: -.02em; margin: 8px 0 12px; text-wrap: balance; }
-  footer p { color: var(--ink-2); margin: 0 0 22px; max-width: 52ch; }
-  .foot-links { display: flex; flex-wrap: wrap; gap: 10px; }
-  .colophon { margin-top: 40px; font-family: var(--mono); font-size: 12px; color: var(--muted); }
+  /* ============================ About ============================ */
+  .about { padding: 64px 0 12px; }
+  .about-grid { display: grid; grid-template-columns: 1.3fr 1fr; gap: 40px; align-items: start; }
+  .about-grid p { color: var(--ink-2); font-size: 16.5px; margin: 14px 0 0; }
+  .about-grid p b { color: var(--ink); font-weight: 600; }
+  .about-h { font-size: clamp(23px, 3.4vw, 31px); letter-spacing: -.025em; margin: 10px 0 0; font-weight: 800; text-wrap: balance; }
+  .skills { border: 1px solid var(--border); border-radius: var(--r); background: var(--surface); padding: 22px; box-shadow: var(--shadow-sm); }
+  .skills h3 { margin: 0 0 14px; font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); font-weight: 700; }
+  .skills ul { margin: 0; padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: 8px; }
+  .skills li { font-family: var(--mono); font-size: 12px; padding: 6px 11px; border-radius: 8px; background: var(--surface-2); border: 1px solid var(--border); color: var(--ink-2); }
 
-  :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 6px; }
-  @media (prefers-reduced-motion: reduce) { * { transition: none !important; scroll-behavior: auto; } }
+  /* ============================ Footer ============================ */
+  footer.site { margin-top: 64px; border-top: 1px solid var(--border); background: var(--surface-2); }
+  footer .wrap { padding: 66px 28px 40px; }
+  footer .cta-h { font-size: clamp(26px, 4.4vw, 38px); font-weight: 800; letter-spacing: -.03em; margin: 12px 0 14px; text-wrap: balance; max-width: 18ch; }
+  footer p.sub { color: var(--ink-2); margin: 0 0 26px; max-width: 52ch; font-size: 16px; }
+  .foot-links { display: flex; flex-wrap: wrap; gap: 11px; }
+  .colophon { margin-top: 44px; padding-top: 22px; border-top: 1px solid var(--border); font-family: var(--mono); font-size: 12px; color: var(--muted); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px 20px; }
+
+  /* ============================ Motion ============================ */
+  .reveal { opacity: 0; transform: translateY(18px); transition: opacity .6s ease, transform .6s cubic-bezier(.2,.7,.2,1); }
+  .reveal.in { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; animation: none !important; scroll-behavior: auto; }
+    .reveal { opacity: 1; transform: none; }
+  }
+
+  @media (max-width: 780px) { .about-grid { grid-template-columns: 1fr; gap: 24px; } }
   @media (max-width: 560px) {
+    .wrap { padding: 0 20px; }
+    .hero { padding: 60px 0 36px; }
     .site nav a.hide-sm { display: none; }
-    .hero { padding: 48px 0 30px; }
+    .stat { padding: 12px 16px; }
   }
 </style>
 </head>
-<body>
+<body id="top">
 
-<header class="site">
+<header class="site" id="hdr">
   <div class="wrap">
-    <a class="brand" href="#top"><span class="dot">HP</span> Haresh Prajapati</a>
+    <a class="brand" href="#top"><span class="mark">HP</span> Haresh Prajapati</a>
     <nav>
       <a href="#work">Work</a>
       <a href="#about" class="hide-sm">About</a>
       <a href="#contact">Contact</a>
-      <button class="toggle" id="themeBtn" aria-label="Toggle theme" title="Toggle theme">◐</button>
+      <a href="#contact" class="avail hide-sm">● Available</a>
+      <button class="toggle" id="themeBtn" aria-label="Toggle light/dark theme" title="Toggle theme">◐</button>
     </nav>
   </div>
 </header>
 
-<main id="top">
-  <section class="hero wrap">
-    <p class="eyebrow">Salesforce Developer · LWC · Apex · React / Node</p>
-    <h1>I build custom Salesforce apps that feel like real products.</h1>
-    <p class="lede">
-      From <b>Lightning Web Components &amp; Apex</b> inside the org to <b>full-stack React + Node</b>
-      integrations over the Salesforce API — 17 shipped apps across Sales Cloud, Service Cloud,
-      Platform Events, and OAuth 2.0. Every one runs on live Salesforce data.
-    </p>
-    <div class="stats">
-      <div class="stat"><b>17</b><span>Apps shipped</span></div>
-      <div class="stat"><b>LWC · Apex</b><span>In-org</span></div>
-      <div class="stat"><b>React · Node</b><span>Full-stack</span></div>
-      <div class="stat"><b>OAuth 2.0</b><span>PKCE + jsforce</span></div>
-    </div>
-    <div class="cta-row">
-      <a class="btn primary" href="#work">View the work →</a>
-      <a class="btn ghost" id="cta-email" href="#contact">Get in touch</a>
+<main>
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-glow"></div>
+    <div class="wrap">
+      <span class="eyebrow"><span class="pip"></span> Salesforce Developer · LWC · Apex · React / Node</span>
+      <h1>Custom Salesforce apps that feel like <span class="grad">real products.</span></h1>
+      <p class="lede">
+        From <b>Lightning Web Components &amp; Apex</b> inside the org to <b>full-stack React + Node</b>
+        integrations over the Salesforce API — 17 shipped apps across Sales Cloud, Service Cloud,
+        Platform Events, and OAuth 2.0. Every one runs on live Salesforce data.
+      </p>
+      <div class="stats">
+        <div class="stat"><b>5+ yrs</b><span>Experience</span></div>
+        <div class="stat"><b>17</b><span>Apps shipped</span></div>
+        <div class="stat"><b>LWC · Apex</b><span>In-org</span></div>
+        <div class="stat"><b>React · Node</b><span>Full-stack</span></div>
+        <div class="stat"><b>OAuth 2.0</b><span>PKCE · jsforce</span></div>
+      </div>
+      <div class="cta-row">
+        <a class="btn primary" href="#work">View the work →</a>
+        <a class="btn ghost" id="cta-email" href="#contact">Get in touch</a>
+      </div>
     </div>
   </section>
 
   <section class="wrap" id="work">
-    <div class="controls" role="group" aria-label="Filter projects">
-      <span class="eyebrow">Filter</span>
-      <button class="chip" data-filter="all" aria-pressed="true">All <span class="n" id="n-all"></span></button>
-      <button class="chip" data-filter="fullstack" aria-pressed="false">Full-Stack (React + Node) <span class="n" id="n-fullstack"></span></button>
-      <button class="chip" data-filter="lwc" aria-pressed="false">LWC + Apex <span class="n" id="n-lwc"></span></button>
-      <button class="chip" data-filter="react-lwc" aria-pressed="false">React in Lightning <span class="n" id="n-react-lwc"></span></button>
+    <div class="sec-head">
+      <div>
+        <span class="eyebrow"><span class="pip"></span> Selected work</span>
+        <h2>17 apps, built on Salesforce.</h2>
+        <p>Filter by how they're built — full-stack, native Lightning, or React embedded in Lightning.</p>
+      </div>
+      <div class="controls" role="group" aria-label="Filter projects">
+        <button class="chip" data-filter="all" aria-pressed="true">All <span class="n" id="n-all"></span></button>
+        <button class="chip" data-filter="fullstack" aria-pressed="false">Full-Stack <span class="n" id="n-fullstack"></span></button>
+        <button class="chip" data-filter="lwc" aria-pressed="false">LWC + Apex <span class="n" id="n-lwc"></span></button>
+        <button class="chip" data-filter="react-lwc" aria-pressed="false">React in Lightning <span class="n" id="n-react-lwc"></span></button>
+      </div>
     </div>
     <div class="grid" id="grid"></div>
   </section>
 
-  <section class="wrap" id="about" style="padding:40px 0 10px;max-width:760px;">
-    <p class="eyebrow">About</p>
-    <h2 style="font-size:clamp(22px,3.5vw,30px);letter-spacing:-.02em;margin:12px 0 14px;text-wrap:balance;">
-      Salesforce, end to end — declarative to code to integration.
-    </h2>
-    <p style="color:var(--ink-2);font-size:17px;">
-      I design and build on the Salesforce Platform: Lightning Web Components, Apex (triggers, batch,
-      schedulers, Platform Events, state machines), and custom data models — plus full-stack apps in
-      React &amp; Node that authenticate through OAuth 2.0 (PKCE) and talk to Salesforce via jsforce.
-      I care about clean data models, sane architecture, and interfaces that look production-ready, not
-      demo-ware. The projects below are all built on real orgs with seeded, realistic data.
-    </p>
+  <section class="wrap about" id="about">
+    <div class="about-grid">
+      <div>
+        <span class="eyebrow"><span class="pip"></span> About</span>
+        <h2 class="about-h">Salesforce, end to end — declarative to code to integration.</h2>
+        <p>
+          I'm a developer with <b>5+ years</b> of full-stack experience (React &amp; Node), now focused on the
+          <b>Salesforce Platform</b>. I build Lightning Web Components, Apex (triggers, batch, schedulers,
+          Platform Events, state machines), and custom data models — and, when a project needs a custom UI or
+          external integration, full-stack apps in React &amp; Node that authenticate through OAuth 2.0 (PKCE)
+          and talk to Salesforce via jsforce.
+        </p>
+        <p>
+          I care about clean data models, sane architecture, and interfaces that look production-ready — not
+          demo-ware. Based in <b>Navsari, Gujarat, India</b> and available for remote freelance &amp; contract
+          work. Every project here runs on a real org with realistic, seeded data.
+        </p>
+      </div>
+      <div class="skills">
+        <h3>Toolbox</h3>
+        <ul>
+          <li>LWC</li><li>Apex</li><li>SOQL</li><li>Triggers</li><li>Batch / Scheduler</li>
+          <li>Platform Events</li><li>Flows</li><li>Custom Objects</li><li>Sales Cloud</li>
+          <li>Service Cloud</li><li>React</li><li>Vite</li><li>Node / Express</li><li>jsforce</li>
+          <li>OAuth 2.0 PKCE</li><li>REST</li>
+        </ul>
+      </div>
+    </div>
   </section>
 </main>
 
 <footer class="site" id="contact">
   <div class="wrap">
-    <p class="eyebrow">Contact</p>
-    <h2 class="cta-h">Have a Salesforce project? Let's talk.</h2>
-    <p>Custom Lightning apps, Apex automation, Salesforce + React integrations, or a full build from scratch — I'm available for freelance and contract work.</p>
+    <span class="eyebrow"><span class="pip"></span> Contact</span>
+    <h2 class="cta-h">Have a Salesforce project? Let's build it.</h2>
+    <p class="sub">Custom Lightning apps, Apex automation, Salesforce + React integrations, or a full build from scratch — I'm available for freelance and contract work.</p>
     <div class="foot-links" id="foot-links"></div>
-    <p class="colophon">© <span id="yr"></span> Haresh Prajapati · Built with plain HTML/CSS · Salesforce Developer</p>
+    <div class="colophon">
+      <span>© <span id="yr"></span> Haresh Prajapati — Salesforce Developer</span>
+      <span>Built from scratch · HTML &amp; CSS</span>
+    </div>
   </div>
 </footer>
 
 <script>
   /* ================================================================
-     EDIT ME — put your real profile + per-project links here.
-     - Replace the profile URLs with your GitHub / LinkedIn / Upwork.
-     - For each project, set `demo` to its YouTube (unlisted) link
-       and `repo` to its GitHub repo URL. Leave "" to grey out a button.
+     Profile + per-project links.
      ================================================================ */
   const PROFILE = {
-    email:    "devkumarprajapati.contact@gmail.com",
-    linkedin: "https://www.linkedin.com/in/your-profile",
-    upwork:   "https://www.upwork.com/freelancers/your-profile",
+    email:    "hareshkumarprajapatidev@gmail.com",
+    linkedin: "https://www.linkedin.com/in/hareshprajapati369/",
+    upwork:   "https://www.upwork.com/freelancers/~014e7b2b0d9582a21d",
     repo:     "https://github.com/hareshkumar-dev/Portfolio-Projects",
   };
 
-  // YouTube demo link per project (id → url)
+  const GROUP_LABEL = {
+    "fullstack": "Full-Stack · React + Node",
+    "lwc": "LWC + Apex",
+    "react-lwc": "React in Lightning",
+  };
+
+  // YouTube demo per project (id → url)
   const DEMOS = {
     "01_DispatchFlow":  "https://youtu.be/_jfx6uZi_zU",
     "02_LoanFlow":      "https://youtu.be/cSrA7TNs2D8",
@@ -298,76 +382,69 @@
     "17_MeetSlot":      "https://youtu.be/w8g1pQIpkQ0",
   };
 
-  const GROUP_LABEL = {
-    "fullstack": "Full-Stack · React + Node",
-    "lwc": "LWC + Apex",
-    "react-lwc": "React in Lightning",
-  };
-
   const PROJECTS = [
     { id:"08_PipelinePro", name:"PipelinePro", group:"fullstack",
       blurb:"Sales-pipeline CRM in React with a live ‘pipeline by stage’ dashboard, win-rate KPIs, and lead conversion — over standard Opportunities & Leads.",
-      tags:["React","Node","jsforce","OAuth 2.0"], demo:"", repo:"" },
+      tags:["React","Node","jsforce","OAuth 2.0"] },
     { id:"12_EstateHub", name:"EstateHub", group:"fullstack",
       blurb:"Property marketplace with server-side search filters, a price-range slider, and inquiry-to-Lead capture on a custom Salesforce data model.",
-      tags:["React","Node","SOQL","Leads"], demo:"", repo:"" },
+      tags:["React","Node","SOQL","Leads"] },
     { id:"11_HireFlow", name:"HireFlow", group:"fullstack",
       blurb:"Applicant tracking system: public careers site plus a recruiter kanban that moves candidates through stages and auto-closes roles when openings fill.",
-      tags:["React","Node","Apex trigger"], demo:"", repo:"" },
+      tags:["React","Node","Apex trigger"] },
     { id:"04_ClaimFlow", name:"ClaimFlow", group:"lwc",
       blurb:"Insurance claims console that enforces a state-machine lifecycle (FNOL → Settlement) and rejects illegal transitions, with a full audit trail.",
-      tags:["LWC","Apex","State machine"], demo:"", repo:"" },
+      tags:["LWC","Apex","State machine"] },
     { id:"03_ServiceSLA", name:"ServiceSLA", group:"lwc",
       blurb:"Service-level command center with live SLA countdown timers and automatic breach escalation across support cases.",
-      tags:["LWC","Apex","Scheduler"], demo:"", repo:"" },
+      tags:["LWC","Apex","Scheduler"] },
     { id:"01_DispatchFlow", name:"DispatchFlow", group:"lwc",
       blurb:"Field-service dispatch console that auto-matches work orders to the best-fit technician by skill, zone, and current workload.",
-      tags:["LWC","Apex","Custom Metadata"], demo:"", repo:"" },
+      tags:["LWC","Apex","Custom Metadata"] },
     { id:"10_ShopTrack", name:"ShopTrack", group:"fullstack",
       blurb:"E-commerce storefront with cart & checkout, plus an operator fulfillment console — built on standard Salesforce Orders, Products & Pricebooks.",
-      tags:["React","Node","Orders","OrderItems"], demo:"", repo:"" },
+      tags:["React","Node","Orders"] },
     { id:"09_Eventify", name:"Eventify", group:"fullstack",
       blurb:"Event-registration platform: public sign-ups with live seat availability plus an organizer console for check-ins, on custom objects.",
-      tags:["React","Node","Custom Objects"], demo:"", repo:"" },
+      tags:["React","Node","Custom Objects"] },
     { id:"06_ServiceDesk", name:"ServiceDesk", group:"fullstack",
       blurb:"Customer-support portal in React that logs in through Salesforce OAuth 2.0 (PKCE); tickets read and write straight to Cases.",
-      tags:["React","Node","OAuth PKCE","Cases"], demo:"", repo:"" },
+      tags:["React","Node","OAuth PKCE","Cases"] },
     { id:"02_LoanFlow", name:"LoanFlow", group:"lwc",
       blurb:"Loan-origination console with automated risk scoring and rules-based auto-approve / refer / decline decisions.",
-      tags:["LWC","Apex","Scoring"], demo:"", repo:"" },
+      tags:["LWC","Apex","Scoring"] },
     { id:"05_RenewFlow", name:"RenewFlow", group:"lwc",
       blurb:"Subscription revenue & renewals dashboard tracking MRR / ARR, upcoming renewals, and churn with roll-up automation.",
-      tags:["LWC","Apex","Triggers"], demo:"", repo:"" },
+      tags:["LWC","Apex","Triggers"] },
     { id:"07_ProjectBoard", name:"ProjectBoard", group:"react-lwc",
       blurb:"Drag-and-drop project kanban written in React and embedded in a Lightning page through a light-DOM bridge to Apex.",
-      tags:["React","LWC","Apex"], demo:"", repo:"" },
+      tags:["React","LWC","Apex"] },
     { id:"17_MeetSlot", name:"MeetSlot", group:"react-lwc",
       blurb:"Team-scheduling calendar built in React, embedded in Lightning — month view, typed events, and meeting booking.",
-      tags:["React","LWC","Apex"], demo:"", repo:"" },
+      tags:["React","LWC","Apex"] },
     { id:"16_EventRelay", name:"EventRelay", group:"lwc",
       blurb:"Order console where every status change streams through Platform Events into a live, event-sourced audit history.",
-      tags:["LWC","Apex","Platform Events"], demo:"", repo:"" },
+      tags:["LWC","Apex","Platform Events"] },
     { id:"15_OnboardingHub", name:"OnboardingHub", group:"lwc",
       blurb:"New-hire onboarding tracker with per-role checklists and automatic progress calculation via record-triggered flow.",
-      tags:["LWC","Apex","Flow"], demo:"", repo:"" },
+      tags:["LWC","Apex","Flow"] },
     { id:"14_AssetTracker", name:"AssetTracker", group:"lwc",
       blurb:"Inventory dashboard with visual stock levels and automatic reorder-point detection across the catalog.",
-      tags:["LWC","Apex","Batch"], demo:"", repo:"" },
+      tags:["LWC","Apex","Batch"] },
     { id:"13_ExpenseManager", name:"ExpenseManager", group:"lwc",
       blurb:"Expense-reporting app with itemized line items, categories, and automatic report totals via roll-up, plus a submit-for-approval flow.",
-      tags:["LWC","Apex","Roll-up"], demo:"", repo:"" },
+      tags:["LWC","Apex","Roll-up"] },
   ];
 
-  /* ---- render ---- */
-  const grid = document.getElementById("grid");
   const esc = (s) => s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
   function card(p) {
     const demo = DEMOS[p.id] || "";
     const demoEmpty = demo ? "" : ' data-empty="1"';
-    return `<article class="card" data-group="${p.group}">
+    return `<article class="card reveal" data-group="${p.group}">
       <div class="shot">
         <img src="assets/${p.id}.jpg" alt="${esc(p.name)} screenshot" loading="lazy" />
         <span class="tag-group">${GROUP_LABEL[p.group]}</span>
+        ${demo ? `<span class="play"><span class="disc">▶</span> Watch demo</span>` : ``}
       </div>
       <div class="card-body">
         <h3>${esc(p.name)}</h3>
@@ -380,14 +457,13 @@
       </div>
     </article>`;
   }
+  const grid = document.getElementById("grid");
   grid.innerHTML = PROJECTS.map(card).join("");
 
-  /* ---- counts ---- */
   const counts = { all: PROJECTS.length, fullstack:0, lwc:0, "react-lwc":0 };
   PROJECTS.forEach(p => counts[p.group]++);
   Object.keys(counts).forEach(k => { const el = document.getElementById("n-"+k); if (el) el.textContent = counts[k]; });
 
-  /* ---- filter ---- */
   document.querySelectorAll(".chip").forEach(chip => {
     chip.addEventListener("click", () => {
       document.querySelectorAll(".chip").forEach(c => c.setAttribute("aria-pressed","false"));
@@ -399,7 +475,6 @@
     });
   });
 
-  /* ---- profile links ---- */
   const footLinks = [
     { label: "Email",    href: "mailto:" + PROFILE.email },
     { label: "GitHub",   href: PROFILE.repo },
@@ -411,14 +486,36 @@
   document.getElementById("cta-email").href = "mailto:" + PROFILE.email;
   document.getElementById("yr").textContent = "2026";
 
-  /* ---- theme toggle ---- */
+  // theme toggle
   const root = document.documentElement;
-  const btn = document.getElementById("themeBtn");
-  btn.addEventListener("click", () => {
+  document.getElementById("themeBtn").addEventListener("click", () => {
     const cur = root.getAttribute("data-theme")
       || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
     root.setAttribute("data-theme", cur === "dark" ? "light" : "dark");
   });
+
+  // header border on scroll
+  const hdr = document.getElementById("hdr");
+  const onScroll = () => hdr.classList.toggle("scrolled", window.scrollY > 8);
+  onScroll(); addEventListener("scroll", onScroll, { passive: true });
+
+  // scroll reveal (staggered)
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (!reduce && "IntersectionObserver" in window) {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e, i) => {
+        if (e.isIntersecting) {
+          const el = e.target;
+          el.style.transitionDelay = Math.min(i * 45, 220) + "ms";
+          el.classList.add("in");
+          io.unobserve(el);
+        }
+      });
+    }, { threshold: .12, rootMargin: "0px 0px -40px 0px" });
+    document.querySelectorAll(".reveal").forEach(el => io.observe(el));
+  } else {
+    document.querySelectorAll(".reveal").forEach(el => el.classList.add("in"));
+  }
 </script>
 </body>
 </html>
