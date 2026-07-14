@@ -1,0 +1,5 @@
+# Standard SFDX ignore
+**/jsconfig.json
+**/.eslintrc.json
+**/__tests__/**
+.sfdx

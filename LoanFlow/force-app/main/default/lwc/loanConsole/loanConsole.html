@@ -1,0 +1,121 @@
+<template>
+    <div class="uw">
+        <!-- Header -->
+        <div class="uw-head">
+            <div class="head-title">
+                <span class="head-icon">
+                    <lightning-icon icon-name="utility:moneybag" size="small"></lightning-icon>
+                </span>
+                <div>
+                    <h1>Loan Origination Console</h1>
+                    <p>Automated underwriting — every application scored and decided</p>
+                </div>
+            </div>
+            <div class="head-actions">
+                <button class="btn btn_ghost" onclick={refresh}>Refresh</button>
+            </div>
+        </div>
+
+        <!-- KPI tiles -->
+        <div class="kpi-row">
+            <template for:each={tiles} for:item="tile">
+                <div key={tile.key} class={tile.theme}>
+                    <div class="kpi-value">{tile.value}</div>
+                    <div class="kpi-label">{tile.label}</div>
+                </div>
+            </template>
+        </div>
+
+        <!-- Application cards -->
+        <template lwc:if={hasRows}>
+            <div class="card-grid">
+                <template for:each={cards} for:item="a">
+                    <div key={a.id} class="app-card">
+                        <div class="app-top">
+                            <div class="app-id">
+                                <span class="app-applicant">{a.applicant}</span>
+                                <span class="app-name">{a.name}</span>
+                            </div>
+                            <span class={a.badgeClass}>
+                                <lightning-icon icon-name={a.decisionIcon} size="xx-small"></lightning-icon>
+                                <span>{a.decision}</span>
+                            </span>
+                        </div>
+
+                        <!-- Risk score meter -->
+                        <template lwc:if={a.hasScore}>
+                            <div class="meter-block">
+                                <div class="meter-head">
+                                    <span class="meter-label">Risk score</span>
+                                    <span class={a.scoreNumClass}>{a.score}</span>
+                                </div>
+                                <div class="meter-track">
+                                    <span class="meter-marker" style={a.markerStyle}></span>
+                                </div>
+                                <div class="meter-scale"><span>0</span><span>40</span><span>70</span><span>100</span></div>
+                            </div>
+                        </template>
+
+                        <!-- Financials -->
+                        <div class="stats">
+                            <div class="stat"><span class="stat-label">Amount</span><span class="stat-value">{a.amount}</span></div>
+                            <div class="stat"><span class="stat-label">Credit</span><span class="stat-value">{a.credit}</span></div>
+                            <div class="stat"><span class="stat-label">Income</span><span class="stat-value">{a.income}</span></div>
+                        </div>
+
+                        <template lwc:if={a.reason}>
+                            <div class="reason">{a.reason}</div>
+                        </template>
+
+                        <div class="app-foot">
+                            <template lwc:if={a.isDraft}>
+                                <button class="btn btn_primary" data-id={a.id} onclick={handleSubmit} disabled={busy}>Submit</button>
+                            </template>
+                            <button class="btn-mini" data-id={a.id} onclick={handleAudit}>
+                                <lightning-icon icon-name="utility:list" size="xx-small"></lightning-icon>
+                                <span>Audit trail</span>
+                            </button>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </template>
+        <template lwc:else>
+            <div class="empty">No applications yet. Submitting an application runs it through automated underwriting and records a decision.</div>
+        </template>
+    </div>
+
+    <!-- Audit modal -->
+    <template lwc:if={showAudit}>
+        <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <h2 class="slds-modal__title">Decision audit — {auditAppName}</h2>
+                </header>
+                <div class="slds-modal__content slds-var-p-around_medium">
+                    <template lwc:if={hasAudits}>
+                        <div class="audit-list">
+                            <template for:each={audits} for:item="au">
+                                <div key={au.id} class="audit-item">
+                                    <div class="audit-score">{au.score}</div>
+                                    <div class="audit-body">
+                                        <div class="audit-decision">{au.decision}</div>
+                                        <div class="audit-reason">{au.reason}</div>
+                                        <div class="audit-meta">{au.by} · {au.at}</div>
+                                    </div>
+                                </div>
+                            </template>
+                        </div>
+                    </template>
+                    <template lwc:else>
+                        <div class="empty">No audit records yet.</div>
+                    </template>
+                </div>
+                <footer class="slds-modal__footer">
+                    <button class="btn btn_ghost" onclick={closeAudit}>Close</button>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+</template>

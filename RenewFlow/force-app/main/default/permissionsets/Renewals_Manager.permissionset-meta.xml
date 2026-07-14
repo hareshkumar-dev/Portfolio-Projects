@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <label>Renewals Manager</label>
+    <description>Access to customers, subscriptions, logs, and the revenue dashboard controller.</description>
+    <hasActivationRequired>false</hasActivationRequired>
+
+    
+    <tabSettings>
+        <tab>Revenue_Renewals</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
+<objectPermissions>
+        <object>Customer__c</object>
+        <allowCreate>true</allowCreate>
+        <allowRead>true</allowRead>
+        <allowEdit>true</allowEdit>
+        <allowDelete>true</allowDelete>
+        <viewAllRecords>true</viewAllRecords>
+        <modifyAllRecords>true</modifyAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <object>Subscription__c</object>
+        <allowCreate>true</allowCreate>
+        <allowRead>true</allowRead>
+        <allowEdit>true</allowEdit>
+        <allowDelete>true</allowDelete>
+        <viewAllRecords>true</viewAllRecords>
+        <modifyAllRecords>true</modifyAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <object>Log__c</object>
+        <allowCreate>true</allowCreate>
+        <allowRead>true</allowRead>
+        <allowEdit>false</allowEdit>
+        <allowDelete>false</allowDelete>
+        <viewAllRecords>true</viewAllRecords>
+        <modifyAllRecords>false</modifyAllRecords>
+    </objectPermissions>
+
+    <fieldPermissions><field>Customer__c.Total_MRR__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+    <fieldPermissions><field>Customer__c.Active_Subscriptions__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+
+    <fieldPermissions><field>Subscription__c.Customer__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+    <fieldPermissions><field>Subscription__c.Product__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+    <fieldPermissions><field>Subscription__c.MRR__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+    <fieldPermissions><field>Subscription__c.Term_Months__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+    <fieldPermissions><field>Subscription__c.Start_Date__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+    <fieldPermissions><field>Subscription__c.End_Date__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+    <fieldPermissions><field>Subscription__c.Status__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+    <fieldPermissions><field>Subscription__c.Auto_Renew__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+    <fieldPermissions><field>Subscription__c.Renewal_Of__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+    <fieldPermissions><field>Subscription__c.Renewal_Generated__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+
+    <fieldPermissions><field>Log__c.Level__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+    <fieldPermissions><field>Log__c.Context__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+    <fieldPermissions><field>Log__c.Message__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+
+    <classAccesses>
+        <apexClass>RevenueDashboardController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>RenewalGenerationBatch</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>RenewalGenerationScheduler</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+</PermissionSet>

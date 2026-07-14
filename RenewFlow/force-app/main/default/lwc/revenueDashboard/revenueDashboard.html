@@ -1,0 +1,77 @@
+<template>
+    <div class="dash">
+        <!-- Header -->
+        <div class="dash-head">
+            <div class="head-title">
+                <span class="head-icon">
+                    <lightning-icon icon-name="utility:trending" size="small"></lightning-icon>
+                </span>
+                <div>
+                    <h1>Revenue &amp; Renewals</h1>
+                    <p>Recurring revenue, upcoming renewals, and churn at a glance</p>
+                </div>
+            </div>
+            <div class="head-actions">
+                <button class="btn btn_primary" onclick={handleRunSweep} disabled={busy}>
+                    <lightning-icon icon-name="utility:refresh" size="xx-small" variant="inverse"></lightning-icon>
+                    <span>Run renewal sweep</span>
+                </button>
+                <button class="btn btn_ghost" onclick={refresh}>Refresh</button>
+            </div>
+        </div>
+
+        <!-- Hero revenue band -->
+        <div class="hero">
+            <div class="hero-metric">
+                <span class="hero-label">Monthly Recurring Revenue</span>
+                <span class="hero-value">{heroMrr}</span>
+            </div>
+            <div class="hero-divider"></div>
+            <div class="hero-metric">
+                <span class="hero-label">Annual Recurring Revenue</span>
+                <span class="hero-value hero-value_muted">{heroArr}</span>
+            </div>
+        </div>
+
+        <!-- KPI tiles -->
+        <div class="kpi-row">
+            <template for:each={tiles} for:item="tile">
+                <div key={tile.key} class={tile.theme}>
+                    <div class="kpi-value">{tile.value}</div>
+                    <div class="kpi-label">{tile.label}</div>
+                </div>
+            </template>
+        </div>
+
+        <!-- Subscriptions -->
+        <div class="panel">
+            <div class="panel-head"><span>Subscriptions</span><span class="count">{rows.length}</span></div>
+            <template lwc:if={hasRows}>
+                <div class="sub-list">
+                    <template for:each={rows} for:item="s">
+                        <div key={s.id} class={s.rowClass}>
+                            <div class="sub-main">
+                                <span class="sub-customer">{s.customer}</span>
+                                <span class="sub-product">{s.product}</span>
+                            </div>
+                            <div class="sub-mrr">
+                                <span class="mrr-value">{s.mrr}</span>
+                                <span class="mrr-label">/mo</span>
+                            </div>
+                            <div class="sub-end">{s.daysLabel}</div>
+                            <div class="sub-right">
+                                <span class={s.pillClass}>{s.status}</span>
+                                <template lwc:if={s.isPending}>
+                                    <button class="btn-mini" data-id={s.id} onclick={handleActivate} disabled={busy}>Activate</button>
+                                </template>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+            </template>
+            <template lwc:else>
+                <div class="empty">No subscriptions yet. Renewals are generated automatically as terms approach their end date; past-grace subscriptions are marked churned.</div>
+            </template>
+        </div>
+    </div>
+</template>

@@ -1,0 +1,119 @@
+<template>
+    <div class="onb">
+        <!-- Header -->
+        <div class="onb-head">
+            <div class="head-title">
+                <span class="head-icon">
+                    <lightning-icon icon-name="utility:user" size="small"></lightning-icon>
+                </span>
+                <div>
+                    <h1>Onboarding Tracker</h1>
+                    <p>New-hire checklists with automatic progress tracking</p>
+                </div>
+            </div>
+            <div class="head-actions">
+                <template lwc:if={showDetail}></template>
+                <template lwc:else>
+                    <button class="btn btn_primary" onclick={openForm}>+ New hire</button>
+                </template>
+                <button class="btn btn_ghost" onclick={handleRefresh}>
+                    <lightning-icon icon-name="utility:refresh" size="xx-small"></lightning-icon>
+                    <span>Refresh</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- ============ DETAIL VIEW ============ -->
+        <template lwc:if={showDetail}>
+            <button class="back" onclick={handleBack}>
+                <lightning-icon icon-name="utility:back" size="xx-small"></lightning-icon>
+                <span>All new hires</span>
+            </button>
+
+            <div class="hire-header">
+                <div class="hh-left">
+                    <span class="avatar avatar_lg">{selInitials}</span>
+                    <div>
+                        <span class="hh-name">{selName}</span>
+                        <span class="hh-meta">{selRole} · {selDept}</span>
+                    </div>
+                </div>
+                <div class="hh-progress">
+                    <div class="hh-pct-row"><span class="hh-pct-label">Onboarding progress</span><span class="hh-pct">{selPctLabel}</span></div>
+                    <div class="bar"><div class={selBarClass} style={selBarStyle}></div></div>
+                </div>
+            </div>
+
+            <div class="panel">
+                <div class="panel-head"><span>Checklist</span><span class="count">{doneCount} / {taskRows.length} done</span></div>
+                <template lwc:if={hasTasks}>
+                    <div class="task-list">
+                        <template for:each={taskRows} for:item="t">
+                            <div key={t.id} class={t.rowClass} data-id={t.id} onclick={handleToggleTask}>
+                                <span class={t.checkClass}>
+                                    <lightning-icon icon-name="utility:check" size="xx-small" variant="inverse"></lightning-icon>
+                                </span>
+                                <span class="task-subject">{t.subject}</span>
+                                <span class="task-cat">{t.category}</span>
+                                <span class="task-due">{t.due}</span>
+                            </div>
+                        </template>
+                    </div>
+                </template>
+                <template lwc:else>
+                    <div class="empty">No checklist tasks for this hire yet.</div>
+                </template>
+            </div>
+        </template>
+
+        <!-- ============ LIST VIEW ============ -->
+        <template lwc:else>
+            <template lwc:if={hasHires}>
+                <div class="hire-grid">
+                    <template for:each={hireCards} for:item="h">
+                        <div key={h.id} class="hire-card" data-id={h.id} onclick={handleSelectHire}>
+                            <div class="hc-top">
+                                <span class="avatar">{h.initials}</span>
+                                <div class="hc-id">
+                                    <span class="hc-name">{h.name}</span>
+                                    <span class="hc-role">{h.role}</span>
+                                </div>
+                                <span class="hc-pct">{h.pctLabel}</span>
+                            </div>
+                            <div class="bar"><div class={h.barClass} style={h.barStyle}></div></div>
+                            <div class="hc-tags"><span class="chip">{h.dept}</span><span class="chip chip_status">{h.status}</span></div>
+                        </div>
+                    </template>
+                </div>
+            </template>
+            <template lwc:else>
+                <div class="empty">No new hires yet. Click <b>+ New hire</b> to add one — a checklist is created automatically.</div>
+            </template>
+        </template>
+    </div>
+
+    <!-- New hire modal -->
+    <template lwc:if={showForm}>
+        <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header"><h2 class="slds-modal__title">New hire</h2></header>
+                <div class="slds-modal__content slds-var-p-around_medium modal-body">
+                    <label>Name<input class="fld" type="text" name="name" value={form.name} onchange={handleFormChange} /></label>
+                    <label>Role<input class="fld" type="text" name="role" value={form.role} onchange={handleFormChange} /></label>
+                    <label>Department
+                        <select class="fld" name="department" value={form.department} onchange={handleFormChange}>
+                            <template for:each={departmentOptions} for:item="d"><option key={d} value={d}>{d}</option></template>
+                        </select>
+                    </label>
+                    <label>Start date<input class="fld" type="date" name="startDate" value={form.startDate} onchange={handleFormChange} /></label>
+                    <label>Email<input class="fld" type="email" name="email" value={form.email} onchange={handleFormChange} /></label>
+                </div>
+                <footer class="slds-modal__footer">
+                    <button class="btn btn_ghost" onclick={closeForm}>Cancel</button>
+                    <button class="btn btn_primary" onclick={handleCreateHire}>Create hire</button>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+</template>

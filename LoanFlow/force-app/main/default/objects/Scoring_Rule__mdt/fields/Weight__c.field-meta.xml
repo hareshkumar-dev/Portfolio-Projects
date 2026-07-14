@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Weight__c</fullName>
+    <label>Weight</label>
+    <type>Number</type>
+    <precision>5</precision>
+    <scale>1</scale>
+    <required>true</required>
+    <fieldManageability>DeveloperControlled</fieldManageability>
+    <description>Maximum points this criterion contributes. Weights across active rules should total 100.</description>
+</CustomField>

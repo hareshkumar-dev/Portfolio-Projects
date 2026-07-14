@@ -1,0 +1,36 @@
+/**
+ * Eventify API
+ *
+ * REST API layer between the Eventify frontend and Salesforce.
+ * Two access tiers:
+ *   /api/public/*  — no login; served via the integration user
+ *   /api/admin/*   — requires an authenticated admin session
+ */
+import 'dotenv/config';
+import express from 'express';
+import cors from 'cors';
+import authRoutes, { requireAuth } from './routes/auth.js';
+import publicRoutes from './routes/public.js';
+import adminRoutes from './routes/admin.js';
+
+const app = express();
+app.use(cors());
+app.use(express.json());
+
+// Request logging
+app.use((req, _res, next) => {
+  console.log(`[${new Date().toLocaleTimeString()}] ${req.method} ${req.url}`);
+  next();
+});
+
+// Routes
+app.get('/api/health', (_req, res) => res.json({ status: 'ok' }));
+
+app.use('/api/public', publicRoutes);
+app.use('/api/auth', authRoutes);
+app.use('/api/admin', requireAuth, adminRoutes);
+
+const PORT = process.env.PORT || 5002;
+app.listen(PORT, () => {
+  console.log(`Eventify API listening on http://localhost:${PORT}`);
+});

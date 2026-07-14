@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>SLA_Status__c</fullName>
+    <label>SLA Status</label>
+    <type>Picklist</type>
+    <description>Maintained by the SLA service and the escalation batch.</description>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>On Track</fullName>
+                <default>true</default>
+                <label>On Track</label>
+            </value>
+            <value>
+                <fullName>Response Breached</fullName>
+                <default>false</default>
+                <label>Response Breached</label>
+            </value>
+            <value>
+                <fullName>Resolution Breached</fullName>
+                <default>false</default>
+                <label>Resolution Breached</label>
+            </value>
+            <value>
+                <fullName>Met</fullName>
+                <default>false</default>
+                <label>Met</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

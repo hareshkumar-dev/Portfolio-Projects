@@ -1,0 +1,141 @@
+<template>
+    <div class="claims">
+        <!-- Header -->
+        <div class="cl-head">
+            <div class="head-title">
+                <span class="head-icon">
+                    <lightning-icon icon-name="utility:shield" size="small"></lightning-icon>
+                </span>
+                <div>
+                    <h1>Claims Command Center</h1>
+                    <p>Claim lifecycle with a guarded state machine and reserve automation</p>
+                </div>
+            </div>
+            <div class="head-actions">
+                <button class="btn btn_primary" onclick={handleRunAging} disabled={busy}>
+                    <lightning-icon icon-name="utility:clock" size="xx-small" variant="inverse"></lightning-icon>
+                    <span>Run aging sweep</span>
+                </button>
+                <button class="btn btn_ghost" onclick={refresh}>Refresh</button>
+            </div>
+        </div>
+
+        <!-- KPI tiles -->
+        <div class="kpi-row">
+            <template for:each={tiles} for:item="tile">
+                <div key={tile.key} class={tile.theme}>
+                    <div class="kpi-value">{tile.value}</div>
+                    <div class="kpi-label">{tile.label}</div>
+                </div>
+            </template>
+        </div>
+
+        <!-- Claim cards -->
+        <template lwc:if={hasRows}>
+            <div class="card-grid">
+                <template for:each={cards} for:item="c">
+                    <div key={c.id} class={c.cardClass}>
+                        <div class="claim-top">
+                            <div class="claim-id">
+                                <span class="claim-name">{c.claimant}</span>
+                                <span class="claim-num">{c.name} · {c.type}</span>
+                            </div>
+                            <div class="claim-badges">
+                                <template lwc:if={c.stalled}>
+                                    <span class="stalled"><lightning-icon icon-name="utility:warning" size="xx-small"></lightning-icon>Stalled</span>
+                                </template>
+                                <span class={c.sevClass}>{c.severity}</span>
+                            </div>
+                        </div>
+
+                        <!-- Stage tracker, or a clean banner for rejected claims -->
+                        <template lwc:if={c.rejected}>
+                            <div class="rejected-banner">
+                                <lightning-icon icon-name="utility:ban" size="x-small"></lightning-icon>
+                                <span>Claim rejected</span>
+                            </div>
+                        </template>
+                        <template lwc:else>
+                            <div class="tracker">
+                                <template for:each={c.steps} for:item="s">
+                                    <div key={s.key} class={s.cls}>
+                                        <span class="node"></span>
+                                        <span class="step-label">{s.label}</span>
+                                    </div>
+                                </template>
+                            </div>
+                        </template>
+
+                        <!-- Stats -->
+                        <div class="stats">
+                            <div class="stat"><span class="stat-label">Reserve</span><span class="stat-value">{c.reserve}</span></div>
+                            <div class="stat"><span class="stat-label">Assigned to</span><span class="stat-value">{c.assigned}</span></div>
+                        </div>
+
+                        <div class="claim-foot">
+                            <button class="btn btn_primary" data-id={c.id} onclick={handleAdvance} disabled={busy}>Advance stage</button>
+                            <button class="btn-mini" data-id={c.id} onclick={handleHistory}>
+                                <lightning-icon icon-name="utility:rows" size="xx-small"></lightning-icon>
+                                <span>History</span>
+                            </button>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </template>
+        <template lwc:else>
+            <div class="empty">No claims yet. New claims enter at FNOL and are auto-assigned and reserved by type; advancing a claim is validated against the state machine.</div>
+        </template>
+    </div>
+
+    <!-- Advance modal -->
+    <template lwc:if={showAdvance}>
+        <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <h2 class="slds-modal__title">Advance — {advanceClaimName}</h2>
+                </header>
+                <div class="slds-modal__content slds-var-p-around_medium">
+                    <lightning-combobox label="Move to stage" value={targetStage}
+                        options={stageOptions} onchange={handleStageChange}></lightning-combobox>
+                    <p class="hint">Only transitions allowed by the state machine will succeed — an illegal move is rejected with a message.</p>
+                </div>
+                <footer class="slds-modal__footer">
+                    <button class="btn btn_ghost" onclick={closeAdvance}>Cancel</button>
+                    <button class="btn btn_primary" onclick={confirmAdvance} disabled={busy}>Advance</button>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+
+    <!-- History modal -->
+    <template lwc:if={showHistory}>
+        <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <h2 class="slds-modal__title">Lifecycle history — {historyClaimName}</h2>
+                </header>
+                <div class="slds-modal__content slds-var-p-around_medium">
+                    <template lwc:if={hasHistory}>
+                        <div class="hist-list">
+                            <template for:each={history} for:item="h">
+                                <div key={h.id} class="hist-item">
+                                    <span class="hist-move">{h.from} → {h.to}</span>
+                                    <span class="hist-meta">{h.by} · {h.at}</span>
+                                </div>
+                            </template>
+                        </div>
+                    </template>
+                    <template lwc:else>
+                        <div class="empty">No history yet.</div>
+                    </template>
+                </div>
+                <footer class="slds-modal__footer">
+                    <button class="btn btn_ghost" onclick={closeHistory}>Close</button>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+</template>

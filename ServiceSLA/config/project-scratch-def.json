@@ -1,0 +1,10 @@
+{
+  "orgName": "Service SLA",
+  "edition": "Developer",
+  "features": ["ServiceCloud"],
+  "settings": {
+    "lightningExperienceSettings": {
+      "enableS1DesktopEnabled": true
+    }
+  }
+}

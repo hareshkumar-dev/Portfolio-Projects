@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Response_Target__c</fullName>
+    <label>Response Target</label>
+    <type>DateTime</type>
+    <description>Deadline for first response, computed from the SLA policy on creation.</description>
+</CustomField>

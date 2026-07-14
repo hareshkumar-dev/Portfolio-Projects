@@ -1,0 +1,122 @@
+<template>
+    <div class="board">
+        <!-- Header -->
+        <div class="board-head">
+            <div class="head-title">
+                <span class="head-icon">
+                    <lightning-icon icon-name="utility:service_report" size="small"></lightning-icon>
+                </span>
+                <div>
+                    <h1>Dispatch Console</h1>
+                    <p>Field-service work orders, auto-matched to the best technician</p>
+                </div>
+            </div>
+            <div class="head-actions">
+                <button class="btn btn_primary" onclick={handleRebalance} disabled={busy}>
+                    <lightning-icon icon-name="utility:refresh" size="xx-small" variant="inverse"></lightning-icon>
+                    <span>Rebalance backlog</span>
+                </button>
+                <button class="btn btn_ghost" onclick={refresh}>Refresh</button>
+            </div>
+        </div>
+
+        <!-- KPI tiles -->
+        <div class="kpi-row">
+            <template for:each={tiles} for:item="tile">
+                <div key={tile.key} class={tile.theme}>
+                    <div class="kpi-value">{tile.value}</div>
+                    <div class="kpi-label">{tile.label}</div>
+                </div>
+            </template>
+        </div>
+
+        <div class="grid">
+            <!-- Technician roster -->
+            <section class="panel">
+                <div class="panel-head"><span>Technician workload</span><span class="count">{techCards.length}</span></div>
+                <template lwc:if={hasTechs}>
+                    <div class="tech-list">
+                        <template for:each={techCards} for:item="t">
+                            <div key={t.id} class="tech-card">
+                                <div class={t.avatarClass}>{t.initials}</div>
+                                <div class="tech-body">
+                                    <div class="tech-top">
+                                        <span class="tech-name">{t.name}</span>
+                                        <span class="tech-load">{t.loadLabel}</span>
+                                    </div>
+                                    <div class="tech-meta">
+                                        <span class={t.availClass}></span>{t.availLabel}
+                                        <span class="sep">·</span>{t.territory}
+                                    </div>
+                                    <div class="bar"><div class={t.barClass} style={t.barStyle}></div></div>
+                                    <div class="chips">
+                                        <template for:each={t.skills} for:item="s">
+                                            <span key={s.key} class="chip">{s.label}</span>
+                                        </template>
+                                    </div>
+                                </div>
+                            </div>
+                        </template>
+                    </div>
+                </template>
+            </section>
+
+            <!-- Work orders -->
+            <section class="panel">
+                <div class="panel-head"><span>Work orders</span><span class="count">{woCards.length}</span></div>
+                <template lwc:if={hasWO}>
+                    <div class="wo-list">
+                        <template for:each={woCards} for:item="w">
+                            <div key={w.id} class={w.cardClass}>
+                                <div class="wo-top">
+                                    <span class="wo-name">{w.name}</span>
+                                    <span class={w.pillClass}>{w.status}</span>
+                                </div>
+                                <div class="wo-subject">{w.subject}</div>
+                                <div class="chips">
+                                    <span class="chip chip_skill">{w.skill}</span>
+                                    <span class="chip">{w.territory}</span>
+                                </div>
+                                <div class="wo-foot">
+                                    <div class="wo-tech">
+                                        <span class="mini-avatar">{w.techInitials}</span>
+                                        <span class="wo-techname">{w.techName}</span>
+                                    </div>
+                                    <div class="wo-right">
+                                        <template lwc:if={w.hasScore}>
+                                            <span class="score">{w.score}</span>
+                                        </template>
+                                        <button class="btn-mini" data-id={w.id} onclick={handleReassignClick}>Reassign</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </template>
+                    </div>
+                </template>
+                <template lwc:else>
+                    <div class="empty">New work orders are auto-dispatched to the best-matching technician as they are created.</div>
+                </template>
+            </section>
+        </div>
+    </div>
+
+    <!-- Reassign modal -->
+    <template lwc:if={showReassign}>
+        <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <h2 class="slds-modal__title">Reassign — {reassignWoName}</h2>
+                </header>
+                <div class="slds-modal__content slds-var-p-around_medium">
+                    <lightning-combobox label="Technician" value={selectedTechId}
+                        options={techOptions} onchange={handleTechChange}></lightning-combobox>
+                </div>
+                <footer class="slds-modal__footer">
+                    <button class="btn btn_ghost" onclick={closeReassign}>Cancel</button>
+                    <button class="btn btn_primary" onclick={confirmReassign} disabled={busy}>Reassign</button>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+</template>

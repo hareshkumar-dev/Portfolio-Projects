@@ -1,0 +1,7 @@
+String baseUrl = URL.getOrgDomainUrl().toExternalForm();
+String sessionId = UserInfo.getSessionId();
+
+String frontdoorUrl = baseUrl + '/secur/frontdoor.jsp?sid=' +
+    EncodingUtil.urlEncode(sessionId, 'UTF-8');
+
+System.debug(frontdoorUrl);

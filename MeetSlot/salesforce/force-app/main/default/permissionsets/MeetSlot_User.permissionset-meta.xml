@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <label>MeetSlot User</label>
+    <description>Access to the Meeting object, its fields, and the calendar Apex controller.</description>
+    <hasActivationRequired>false</hasActivationRequired>
+
+    
+    <tabSettings>
+        <tab>MeetSlot_Calendar</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
+<objectPermissions>
+        <object>Meeting__c</object>
+        <allowCreate>true</allowCreate>
+        <allowRead>true</allowRead>
+        <allowEdit>true</allowEdit>
+        <allowDelete>true</allowDelete>
+        <viewAllRecords>true</viewAllRecords>
+        <modifyAllRecords>true</modifyAllRecords>
+    </objectPermissions>
+
+    <fieldPermissions>
+        <field>Meeting__c.Start_Time__c</field>
+        <readable>true</readable>
+        <editable>true</editable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <field>Meeting__c.Duration_Minutes__c</field>
+        <readable>true</readable>
+        <editable>true</editable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <field>Meeting__c.Type__c</field>
+        <readable>true</readable>
+        <editable>true</editable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <field>Meeting__c.Attendees__c</field>
+        <readable>true</readable>
+        <editable>true</editable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <field>Meeting__c.Notes__c</field>
+        <readable>true</readable>
+        <editable>true</editable>
+    </fieldPermissions>
+
+    <classAccesses>
+        <apexClass>MeetSlotController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+</PermissionSet>

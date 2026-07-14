@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <label>Claims Adjuster</label>
+    <description>Access to claims, history, logs, and the claims console controller.</description>
+    <hasActivationRequired>false</hasActivationRequired>
+
+    
+    <tabSettings>
+        <tab>Claims_Command_Center</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
+<objectPermissions>
+        <object>Claim__c</object>
+        <allowCreate>true</allowCreate>
+        <allowRead>true</allowRead>
+        <allowEdit>true</allowEdit>
+        <allowDelete>true</allowDelete>
+        <viewAllRecords>true</viewAllRecords>
+        <modifyAllRecords>true</modifyAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <object>Claim_History__c</object>
+        <allowCreate>true</allowCreate>
+        <allowRead>true</allowRead>
+        <allowEdit>false</allowEdit>
+        <allowDelete>false</allowDelete>
+        <viewAllRecords>true</viewAllRecords>
+        <modifyAllRecords>false</modifyAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <object>Log__c</object>
+        <allowCreate>true</allowCreate>
+        <allowRead>true</allowRead>
+        <allowEdit>false</allowEdit>
+        <allowDelete>false</allowDelete>
+        <viewAllRecords>true</viewAllRecords>
+        <modifyAllRecords>false</modifyAllRecords>
+    </objectPermissions>
+    <fieldPermissions><field>Claim__c.Claim_Type__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+    <fieldPermissions><field>Claim__c.Severity__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+    <fieldPermissions><field>Claim__c.Stage__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+    <fieldPermissions><field>Claim__c.Reserve_Amount__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+    <fieldPermissions><field>Claim__c.Assigned_To__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+    <fieldPermissions><field>Claim__c.Stage_Changed_At__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+    <fieldPermissions><field>Claim__c.Is_Stalled__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+
+    <fieldPermissions><field>Claim_History__c.Claim__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+    <fieldPermissions><field>Claim_History__c.From_Stage__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+    <fieldPermissions><field>Claim_History__c.To_Stage__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+    <fieldPermissions><field>Claim_History__c.Changed_By__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+    <fieldPermissions><field>Claim_History__c.Changed_At__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+
+    <fieldPermissions><field>Log__c.Level__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+    <fieldPermissions><field>Log__c.Context__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+    <fieldPermissions><field>Log__c.Message__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+
+    <classAccesses>
+        <apexClass>ClaimConsoleController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>StageAgingBatch</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>StageAgingScheduler</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+</PermissionSet>

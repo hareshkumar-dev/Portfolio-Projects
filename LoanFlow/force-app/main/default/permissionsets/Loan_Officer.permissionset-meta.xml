@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <label>Loan Officer</label>
+    <description>Access to loan applications, decision audits, logs, and the console controller.</description>
+    <hasActivationRequired>false</hasActivationRequired>
+
+    <tabSettings>
+        <tab>Loan_Console</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
+
+    <objectPermissions>
+        <object>Loan_Application__c</object>
+        <allowCreate>true</allowCreate>
+        <allowRead>true</allowRead>
+        <allowEdit>true</allowEdit>
+        <allowDelete>true</allowDelete>
+        <viewAllRecords>true</viewAllRecords>
+        <modifyAllRecords>true</modifyAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <object>Decision_Audit__c</object>
+        <allowCreate>true</allowCreate>
+        <allowRead>true</allowRead>
+        <allowEdit>false</allowEdit>
+        <allowDelete>false</allowDelete>
+        <viewAllRecords>true</viewAllRecords>
+        <modifyAllRecords>false</modifyAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <object>Log__c</object>
+        <allowCreate>true</allowCreate>
+        <allowRead>true</allowRead>
+        <allowEdit>false</allowEdit>
+        <allowDelete>false</allowDelete>
+        <viewAllRecords>true</viewAllRecords>
+        <modifyAllRecords>false</modifyAllRecords>
+    </objectPermissions>
+
+    <!-- Applicant_Name__c and Loan_Amount__c are required fields; FLS is implicit and cannot be set via permission set. -->
+    <fieldPermissions>
+        <field>Loan_Application__c.Term_Months__c</field>
+        <readable>true</readable><editable>true</editable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <field>Loan_Application__c.Annual_Income__c</field>
+        <readable>true</readable><editable>true</editable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <field>Loan_Application__c.Credit_Score__c</field>
+        <readable>true</readable><editable>true</editable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <field>Loan_Application__c.Monthly_Debt__c</field>
+        <readable>true</readable><editable>true</editable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <field>Loan_Application__c.Employment_Years__c</field>
+        <readable>true</readable><editable>true</editable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <field>Loan_Application__c.Status__c</field>
+        <readable>true</readable><editable>true</editable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <field>Loan_Application__c.Risk_Score__c</field>
+        <readable>true</readable><editable>true</editable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <field>Loan_Application__c.Decision__c</field>
+        <readable>true</readable><editable>true</editable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <field>Loan_Application__c.Decision_Reason__c</field>
+        <readable>true</readable><editable>true</editable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <field>Loan_Application__c.Requires_Underwriter__c</field>
+        <readable>true</readable><editable>true</editable>
+    </fieldPermissions>
+
+    <fieldPermissions>
+        <field>Decision_Audit__c.Loan_Application__c</field>
+        <readable>true</readable><editable>true</editable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <field>Decision_Audit__c.Risk_Score__c</field>
+        <readable>true</readable><editable>true</editable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <field>Decision_Audit__c.Decision__c</field>
+        <readable>true</readable><editable>true</editable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <field>Decision_Audit__c.Reason__c</field>
+        <readable>true</readable><editable>true</editable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <field>Decision_Audit__c.Decided_By__c</field>
+        <readable>true</readable><editable>true</editable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <field>Decision_Audit__c.Decided_At__c</field>
+        <readable>true</readable><editable>true</editable>
+    </fieldPermissions>
+
+    <fieldPermissions>
+        <field>Log__c.Level__c</field>
+        <readable>true</readable><editable>true</editable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <field>Log__c.Context__c</field>
+        <readable>true</readable><editable>true</editable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <field>Log__c.Message__c</field>
+        <readable>true</readable><editable>true</editable>
+    </fieldPermissions>
+
+    <classAccesses>
+        <apexClass>LoanConsoleController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+</PermissionSet>

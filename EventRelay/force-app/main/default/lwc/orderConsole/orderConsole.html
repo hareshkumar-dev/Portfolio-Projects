@@ -1,0 +1,93 @@
+<template>
+    <div class="oc">
+        <!-- Header -->
+        <div class="oc-head">
+            <div class="head-title">
+                <span class="head-icon">
+                    <lightning-icon icon-name="utility:cart" size="small"></lightning-icon>
+                </span>
+                <div>
+                    <h1>Order Console</h1>
+                    <p>Order status changes stream through Platform Events into an audit history</p>
+                </div>
+            </div>
+            <button class="btn btn_ghost" onclick={handleRefresh}>
+                <lightning-icon icon-name="utility:refresh" size="xx-small"></lightning-icon>
+                <span>Refresh</span>
+            </button>
+        </div>
+
+        <!-- ============ DETAIL VIEW ============ -->
+        <template lwc:if={showDetail}>
+            <button class="back" onclick={handleBack}>
+                <lightning-icon icon-name="utility:back" size="xx-small"></lightning-icon>
+                <span>All orders</span>
+            </button>
+
+            <div class="order-header">
+                <div class="oh-left">
+                    <span class="oh-name">{selName}</span>
+                    <span class="oh-customer">{selCustomer}</span>
+                    <span class={selStatusClass}>{selStatus}</span>
+                </div>
+                <div class="oh-right">
+                    <span class="oh-amount">{selAmount}</span>
+                    <label class="status-picker">
+                        <span>Change status</span>
+                        <select class="fld" value={selStatus} onchange={handleStatusChange}>
+                            <template for:each={statusOptions} for:item="s"><option key={s} value={s}>{s}</option></template>
+                        </select>
+                    </label>
+                </div>
+            </div>
+
+            <div class="panel">
+                <div class="panel-head">
+                    <span>Event history</span>
+                    <span class="count">{historyRows.length}</span>
+                </div>
+                <template lwc:if={hasHistory}>
+                    <div class="timeline">
+                        <template for:each={historyRows} for:item="h">
+                            <div key={h.id} class="tl-item">
+                                <span class="tl-dot"></span>
+                                <div class="tl-body">
+                                    <div class="tl-move"><span class="tl-from">{h.from}</span>
+                                        <lightning-icon icon-name="utility:forward" size="xx-small"></lightning-icon>
+                                        <span class="tl-to">{h.to}</span></div>
+                                    <div class="tl-meta">{h.by} · {h.time}</div>
+                                </div>
+                            </div>
+                        </template>
+                    </div>
+                </template>
+                <template lwc:else>
+                    <div class="empty">No events yet. Change the status above — a Platform Event fires and a history entry is written (then hit Refresh).</div>
+                </template>
+            </div>
+        </template>
+
+        <!-- ============ LIST VIEW ============ -->
+        <template lwc:else>
+            <template lwc:if={hasOrders}>
+                <div class="order-grid">
+                    <template for:each={orderCards} for:item="o">
+                        <div key={o.id} class="order-card" data-id={o.id} onclick={handleSelect}>
+                            <div class="oc-top">
+                                <div class="oc-id">
+                                    <span class="oc-customer">{o.customer}</span>
+                                    <span class="oc-num">{o.name}</span>
+                                </div>
+                                <span class={o.statusClass}>{o.status}</span>
+                            </div>
+                            <div class="oc-amount">{o.amount}</div>
+                        </div>
+                    </template>
+                </div>
+            </template>
+            <template lwc:else>
+                <div class="empty">No orders yet.</div>
+            </template>
+        </template>
+    </div>
+</template>

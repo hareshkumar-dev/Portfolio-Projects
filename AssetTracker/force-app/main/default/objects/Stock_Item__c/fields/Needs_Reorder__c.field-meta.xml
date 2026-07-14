@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Needs_Reorder__c</fullName>
+    <label>Needs Reorder</label>
+    <type>Checkbox</type>
+    <defaultValue>false</defaultValue>
+    <description>Set by the StockLevelBatch job when stock is at or below the reorder point.</description>
+</CustomField>

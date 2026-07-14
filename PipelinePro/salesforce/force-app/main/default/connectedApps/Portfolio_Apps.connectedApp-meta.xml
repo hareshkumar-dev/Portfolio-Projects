@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ConnectedApp xmlns="http://soap.sforce.com/2006/04/metadata">
+    <contactEmail>devkumarprajapati.contact@gmail.com</contactEmail>
+    <description>Local OAuth client for the portfolio full-stack apps (PipelinePro, Eventify, ShopTrack, HireFlow, EstateHub).</description>
+    <label>Portfolio Apps</label>
+    <oauthConfig>
+        <callbackUrl>http://localhost:5001/api/auth/callback
+http://localhost:5000/api/auth/callback
+http://localhost:5002/api/auth/callback
+http://localhost:5003/api/auth/callback
+http://localhost:5004/api/auth/callback
+http://localhost:5005/api/auth/callback</callbackUrl>
+        <consumerKey>3MVG9GCMQoQ6rpzRqS.NudtdWJy11aayhltu9CSWJMhFhMC2ZHY6IYsOj6Yb88T9RmdbkEh_sxfV3MR.5BkMq</consumerKey>
+        <isAdminApproved>false</isAdminApproved>
+        <isClientCredentialEnabled>false</isClientCredentialEnabled>
+        <isCodeCredentialEnabled>false</isCodeCredentialEnabled>
+        <isCodeCredentialPostOnly>false</isCodeCredentialPostOnly>
+        <isConsumerSecretOptional>true</isConsumerSecretOptional>
+        <isIntrospectAllTokens>false</isIntrospectAllTokens>
+        <isNamedUserJwtEnabled>false</isNamedUserJwtEnabled>
+        <isPkceRequired>true</isPkceRequired>
+        <isRefreshTokenRotationEnabled>true</isRefreshTokenRotationEnabled>
+        <isSecretRequiredForRefreshToken>false</isSecretRequiredForRefreshToken>
+        <isSecretRequiredForTokenExchange>false</isSecretRequiredForTokenExchange>
+        <isTokenExchangeEnabled>false</isTokenExchangeEnabled>
+        <scopes>Api</scopes>
+        <scopes>RefreshToken</scopes>
+        <scopes>OpenID</scopes>
+    </oauthConfig>
+    <oauthPolicy>
+        <ipRelaxation>ENFORCE</ipRelaxation>
+        <isTokenExchangeFlowEnabled>false</isTokenExchangeFlowEnabled>
+        <refreshTokenPolicy>infinite</refreshTokenPolicy>
+    </oauthPolicy>
+</ConnectedApp>

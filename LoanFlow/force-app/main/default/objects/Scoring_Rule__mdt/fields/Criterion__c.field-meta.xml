@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Criterion__c</fullName>
+    <label>Criterion</label>
+    <type>Text</type>
+    <length>60</length>
+    <required>true</required>
+    <fieldManageability>DeveloperControlled</fieldManageability>
+    <description>Which applicant attribute this rule scores (Credit_Score / DTI_Ratio / Income / Employment_Years).</description>
+</CustomField>

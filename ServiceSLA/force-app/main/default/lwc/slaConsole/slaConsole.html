@@ -1,0 +1,77 @@
+<template>
+    <div class="monitor">
+        <!-- Header -->
+        <div class="mon-head">
+            <div class="head-title">
+                <span class="head-icon">
+                    <lightning-icon icon-name="utility:clock" size="small"></lightning-icon>
+                </span>
+                <div>
+                    <h1>SLA Command Center</h1>
+                    <p>Live service-level tracking with automatic breach escalation</p>
+                </div>
+            </div>
+            <div class="head-actions">
+                <button class="btn btn_primary" onclick={handleRunEscalation} disabled={busy}>
+                    <lightning-icon icon-name="utility:refresh" size="xx-small" variant="inverse"></lightning-icon>
+                    <span>Run SLA sweep</span>
+                </button>
+                <button class="btn btn_ghost" onclick={refresh}>Refresh</button>
+            </div>
+        </div>
+
+        <!-- Breach banner -->
+        <template lwc:if={hasBreaches}>
+            <div class="breach-banner">
+                <lightning-icon icon-name="utility:warning" size="x-small" variant="error"></lightning-icon>
+                <span>{breachText}</span>
+            </div>
+        </template>
+
+        <!-- KPI tiles -->
+        <div class="kpi-row">
+            <template for:each={tiles} for:item="tile">
+                <div key={tile.key} class={tile.theme}>
+                    <div class="kpi-value">{tile.value}</div>
+                    <div class="kpi-label">{tile.label}</div>
+                </div>
+            </template>
+        </div>
+
+        <!-- Case monitor -->
+        <div class="panel">
+            <div class="panel-head"><span>Open cases</span><span class="count">{rows.length}</span></div>
+            <template lwc:if={hasRows}>
+                <div class="case-list">
+                    <template for:each={rows} for:item="c">
+                        <div key={c.id} class={c.rowClass}>
+                            <span class="status-icon">
+                                <lightning-icon icon-name={c.statusIcon} size="x-small"></lightning-icon>
+                            </span>
+                            <div class="case-main">
+                                <div class="case-line">
+                                    <span class="case-num">{c.number}</span>
+                                    <span class="case-subject">{c.subject}</span>
+                                </div>
+                                <div class="case-tags">
+                                    <span class={c.tierClass}>{c.tier}</span>
+                                    <span class={c.prioClass}>{c.priority}</span>
+                                    <template lwc:if={c.escalated}>
+                                        <span class="esc"><lightning-icon icon-name="utility:up" size="xx-small"></lightning-icon>Escalated</span>
+                                    </template>
+                                </div>
+                            </div>
+                            <div class="case-right">
+                                <span class={c.timeClass}>{c.timeLabel}</span>
+                                <span class={c.pillClass}>{c.status}</span>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+            </template>
+            <template lwc:else>
+                <div class="empty">No open cases. New cases are tracked against their tier's SLA targets as they arrive.</div>
+            </template>
+        </div>
+    </div>
+</template>

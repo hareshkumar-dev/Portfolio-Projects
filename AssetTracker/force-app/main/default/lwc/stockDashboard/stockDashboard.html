@@ -1,0 +1,67 @@
+<template>
+    <div class="stock">
+        <!-- Header -->
+        <div class="st-head">
+            <div class="head-title">
+                <span class="head-icon">
+                    <lightning-icon icon-name="utility:package" size="small"></lightning-icon>
+                </span>
+                <div>
+                    <h1>Stock Dashboard</h1>
+                    <p>Inventory levels with automatic reorder detection</p>
+                </div>
+            </div>
+            <div class="head-actions">
+                <button class="btn btn_primary" onclick={handleRunScan} disabled={busy}>
+                    <lightning-icon icon-name="utility:refresh" size="xx-small" variant="inverse"></lightning-icon>
+                    <span>Run stock scan</span>
+                </button>
+                <button class="btn btn_ghost" onclick={handleRefresh}>Refresh</button>
+            </div>
+        </div>
+
+        <!-- KPI tiles -->
+        <div class="kpi-row">
+            <template for:each={tiles} for:item="tile">
+                <div key={tile.key} class={tile.theme}>
+                    <div class="kpi-value">{tile.value}</div>
+                    <div class="kpi-label">{tile.label}</div>
+                </div>
+            </template>
+        </div>
+
+        <!-- Item cards -->
+        <div class="panel">
+            <div class="panel-head"><span>Catalog</span><span class="count">{items.length}</span></div>
+            <template lwc:if={hasItems}>
+                <div class="item-grid">
+                    <template for:each={items} for:item="it">
+                        <div key={it.id} class={it.cardClass}>
+                            <div class="item-top">
+                                <div class="item-id">
+                                    <span class="item-name">{it.name}</span>
+                                    <span class="item-tags"><span class="chip chip_sku">{it.sku}</span><span class="chip">{it.category}</span></span>
+                                </div>
+                                <span class={it.badgeClass}>{it.status}</span>
+                            </div>
+
+                            <div class="bar">
+                                <span class="bar-mark"></span>
+                                <div class={it.barFillClass} style={it.barStyle}></div>
+                            </div>
+
+                            <div class="item-stats">
+                                <span class="on-hand">{it.qty}<span class="unit"> on hand</span></span>
+                                <span class="stat-sep">reorder at {it.reorder}</span>
+                                <span class="stat-sep">unit cost {it.cost}</span>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+            </template>
+            <template lwc:else>
+                <div class="empty">No stock items yet. Add items and run a scan to classify their levels.</div>
+            </template>
+        </div>
+    </div>
+</template>

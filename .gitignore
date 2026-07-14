@@ -1,0 +1,31 @@
+# ---- dependencies ----
+**/node_modules/
+
+# ---- secrets (NEVER commit) ----
+**/.env
+**/.env.local
+**/.env.*.local
+# (…but keep the .env.example templates — they are safe to commit)
+!**/.env.example
+
+# ---- build output ----
+**/dist/
+**/build/
+
+# ---- Salesforce ----
+**/.sf/
+**/.sfdx/
+**/.localdevserver/
+**/deploy-options.json
+
+# ---- large media (demos live on YouTube) ----
+*.mp4
+
+# ---- private marketing notes (keep these out of a public repo) ----
+launch-kit/
+
+# ---- OS / editor ----
+.DS_Store
+Thumbs.db
+*.log
+.vscode/

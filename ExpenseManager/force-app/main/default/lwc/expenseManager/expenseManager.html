@@ -1,0 +1,124 @@
+<template>
+    <div class="exp">
+        <!-- Header -->
+        <div class="exp-head">
+            <div class="head-title">
+                <span class="head-icon">
+                    <lightning-icon icon-name="utility:moneybag" size="small"></lightning-icon>
+                </span>
+                <div>
+                    <h1>Expense Manager</h1>
+                    <p>Submit and track expense reports with automatic totals</p>
+                </div>
+            </div>
+            <button class="btn btn_ghost" onclick={handleRefresh}>
+                <lightning-icon icon-name="utility:refresh" size="xx-small"></lightning-icon>
+                <span>Refresh</span>
+            </button>
+        </div>
+
+        <!-- ============ DETAIL VIEW ============ -->
+        <template lwc:if={showDetail}>
+            <button class="back" onclick={handleBack}>
+                <lightning-icon icon-name="utility:back" size="xx-small"></lightning-icon>
+                <span>All reports</span>
+            </button>
+
+            <div class="report-header">
+                <div class="rh-left">
+                    <span class="rh-name">{rptName}</span>
+                    <template lwc:if={editingPurpose}>
+                        <div class="purpose-edit">
+                            <input class="fld" type="text" value={editPurposeValue} oninput={handlePurposeInput} />
+                            <button class="btn btn_primary btn-sm" onclick={handleSavePurpose}>Save</button>
+                            <button class="btn-text" onclick={handleCancelEdit}>Cancel</button>
+                        </div>
+                    </template>
+                    <template lwc:else>
+                        <span class="rh-purpose-row">
+                            <span class="rh-purpose">{rptPurpose}</span>
+                            <button class="icon-edit" onclick={handleEditPurpose} title="Rename report">
+                                <lightning-icon icon-name="utility:edit" size="xx-small"></lightning-icon>
+                            </button>
+                        </span>
+                    </template>
+                    <span class={rptStatusClass}>{rptStatus}</span>
+                </div>
+                <div class="rh-right">
+                    <span class="rh-total-label">Total</span>
+                    <span class="rh-total">{rptTotal}</span>
+                    <div class="rh-actions">
+                        <template lwc:if={canSubmit}>
+                            <button class="btn btn_primary" onclick={handleSubmit}>Submit for approval</button>
+                        </template>
+                        <button class="btn btn_danger" onclick={handleDeleteReport}>
+                            <lightning-icon icon-name="utility:delete" size="xx-small"></lightning-icon>
+                            <span>Delete</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel">
+                <div class="panel-head"><span>Expense lines</span><span class="count">{lineRows.length}</span></div>
+                <template lwc:if={hasLines}>
+                    <div class="line-list">
+                        <template for:each={lineRows} for:item="l">
+                            <div key={l.id} class="line-row">
+                                <span class="line-cat">{l.category}</span>
+                                <span class="line-merchant">{l.merchant}</span>
+                                <span class="line-date">{l.date}</span>
+                                <span class="line-amount">{l.amount}</span>
+                                <button class="icon-del" data-id={l.id} onclick={handleDeleteLine} title="Delete line">
+                                    <lightning-icon icon-name="utility:delete" size="xx-small"></lightning-icon>
+                                </button>
+                            </div>
+                        </template>
+                    </div>
+                </template>
+                <template lwc:else>
+                    <div class="empty">No lines yet. Add an expense below — the total updates automatically.</div>
+                </template>
+
+                <!-- Add line -->
+                <div class="add-line">
+                    <select class="fld" name="category" value={line.category} onchange={handleLineChange}>
+                        <template for:each={categoryOptions} for:item="c">
+                            <option key={c.value} value={c.value}>{c.label}</option>
+                        </template>
+                    </select>
+                    <input class="fld" type="text" name="merchant" placeholder="Merchant" value={line.merchant} onchange={handleLineChange} />
+                    <input class="fld" type="date" name="date" value={line.date} onchange={handleLineChange} />
+                    <input class="fld fld-amount" type="number" name="amount" placeholder="Amount" value={line.amount} onchange={handleLineChange} />
+                    <button class="btn btn_primary" onclick={handleAddLine}>Add</button>
+                </div>
+            </div>
+        </template>
+
+        <!-- ============ LIST VIEW ============ -->
+        <template lwc:else>
+            <div class="new-report">
+                <input class="fld" type="text" placeholder="Purpose of a new report (e.g. Client visit — Mumbai)" value={newPurpose} onchange={handlePurposeChange} />
+                <button class="btn btn_primary" onclick={handleCreateReport}>+ New report</button>
+            </div>
+
+            <template lwc:if={hasReports}>
+                <div class="report-grid">
+                    <template for:each={reportCards} for:item="r">
+                        <div key={r.id} class="report-card" data-id={r.id} onclick={handleSelectReport}>
+                            <div class="rc-top">
+                                <span class="rc-purpose">{r.purpose}</span>
+                                <span class={r.statusClass}>{r.status}</span>
+                            </div>
+                            <div class="rc-total">{r.total}</div>
+                            <div class="rc-meta"><span class="rc-num">{r.name}</span><span class="rc-date">{r.date}</span></div>
+                        </div>
+                    </template>
+                </div>
+            </template>
+            <template lwc:else>
+                <div class="empty">No expense reports yet. Create one above to get started.</div>
+            </template>
+        </template>
+    </div>
+</template>

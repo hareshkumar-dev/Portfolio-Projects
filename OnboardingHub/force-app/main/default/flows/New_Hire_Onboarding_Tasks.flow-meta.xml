@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>61.0</apiVersion>
+    <description>When a New Hire is created, generate the standard onboarding checklist.</description>
+    <environments>Default</environments>
+    <interviewLabel>New Hire Onboarding Tasks {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>New Hire Onboarding Tasks</label>
+    <processType>AutoLaunchedFlow</processType>
+    <status>Active</status>
+
+    <start>
+        <locationX>176</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Create_Paperwork_Task</targetReference>
+        </connector>
+        <object>New_Hire__c</object>
+        <recordTriggerType>Create</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+
+    <recordCreates>
+        <name>Create_Paperwork_Task</name>
+        <label>Create Paperwork Task</label>
+        <locationX>176</locationX>
+        <locationY>134</locationY>
+        <connector>
+            <targetReference>Create_IT_Setup_Task</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>Category__c</field>
+            <value>
+                <stringValue>Paperwork</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Due_Date__c</field>
+            <value>
+                <elementReference>$Record.Start_Date__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>New_Hire__c</field>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Status__c</field>
+            <value>
+                <stringValue>Not Started</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Subject__c</field>
+            <value>
+                <stringValue>Complete HR paperwork and tax forms</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Onboarding_Task__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
+
+    <recordCreates>
+        <name>Create_IT_Setup_Task</name>
+        <label>Create IT Setup Task</label>
+        <locationX>176</locationX>
+        <locationY>254</locationY>
+        <connector>
+            <targetReference>Create_Training_Task</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>Category__c</field>
+            <value>
+                <stringValue>IT Setup</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Due_Date__c</field>
+            <value>
+                <elementReference>$Record.Start_Date__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>New_Hire__c</field>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Status__c</field>
+            <value>
+                <stringValue>Not Started</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Subject__c</field>
+            <value>
+                <stringValue>Provision laptop, accounts and email</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Onboarding_Task__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
+
+    <recordCreates>
+        <name>Create_Training_Task</name>
+        <label>Create Training Task</label>
+        <locationX>176</locationX>
+        <locationY>374</locationY>
+        <connector>
+            <targetReference>Create_Team_Intro_Task</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>Category__c</field>
+            <value>
+                <stringValue>Training</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>New_Hire__c</field>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Status__c</field>
+            <value>
+                <stringValue>Not Started</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Subject__c</field>
+            <value>
+                <stringValue>Complete role-specific onboarding training</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Onboarding_Task__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
+
+    <recordCreates>
+        <name>Create_Team_Intro_Task</name>
+        <label>Create Team Intro Task</label>
+        <locationX>176</locationX>
+        <locationY>494</locationY>
+        <connector>
+            <targetReference>Create_Manager_1_1_Task</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>Category__c</field>
+            <value>
+                <stringValue>Introductions</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>New_Hire__c</field>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Status__c</field>
+            <value>
+                <stringValue>Not Started</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Subject__c</field>
+            <value>
+                <stringValue>Meet the team and key stakeholders</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Onboarding_Task__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
+
+    <recordCreates>
+        <name>Create_Manager_1_1_Task</name>
+        <label>Create Manager 1:1 Task</label>
+        <locationX>176</locationX>
+        <locationY>614</locationY>
+        <inputAssignments>
+            <field>Category__c</field>
+            <value>
+                <stringValue>Introductions</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>New_Hire__c</field>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Status__c</field>
+            <value>
+                <stringValue>Not Started</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Subject__c</field>
+            <value>
+                <stringValue>Schedule first 1:1 with manager</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Onboarding_Task__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
+</Flow>
