@@ -211,6 +211,11 @@
   .about-grid { display: grid; grid-template-columns: 1.3fr 1fr; gap: 40px; align-items: start; }
   .about-grid p { color: var(--ink-2); font-size: 16.5px; margin: 14px 0 0; }
   .about-grid p b { color: var(--ink); font-weight: 600; }
+  .certs { display: flex; flex-wrap: wrap; gap: 10px; margin: 20px 0 0; }
+  .cert { display: inline-flex; align-items: center; gap: 8px; padding: 8px 13px; border: 1px solid var(--border); border-radius: 999px; background: var(--surface-2); font-size: 13.5px; font-weight: 600; color: var(--ink); }
+  .cert-badge { display: inline-grid; place-items: center; width: 17px; height: 17px; border-radius: 50%; background: #1798c1; color: #fff; font-size: 11px; font-weight: 800; }
+  .cert-link { color: var(--accent); text-decoration: none; background: transparent; }
+  .cert-link:hover { text-decoration: underline; }
   .about-h { font-size: clamp(23px, 3.4vw, 31px); letter-spacing: -.025em; margin: 10px 0 0; font-weight: 800; text-wrap: balance; }
   .skills { border: 1px solid var(--border); border-radius: var(--r); background: var(--surface); padding: 22px; box-shadow: var(--shadow-sm); }
   .skills h3 { margin: 0 0 14px; font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); font-weight: 700; }
@@ -317,6 +322,11 @@
           demo-ware. Based in <b>Navsari, Gujarat, India</b> and available for remote freelance &amp; contract
           work. Every project here runs on a real org with realistic, seeded data.
         </p>
+        <div class="certs">
+          <span class="cert"><span class="cert-badge">✓</span> Salesforce Certified Platform Developer</span>
+          <span class="cert"><span class="cert-badge">✓</span> Salesforce Certified Platform Foundations</span>
+          <a class="cert cert-link" href="https://www.salesforce.com/trailblazer/hareshprajapati44" target="_blank" rel="noopener">View my Trailblazer profile →</a>
+        </div>
       </div>
       <div class="skills">
         <h3>Toolbox</h3>
@@ -353,6 +363,7 @@
     linkedin: "https://www.linkedin.com/in/hareshprajapati369/",
     upwork:   "https://www.upwork.com/freelancers/~014e7b2b0d9582a21d",
     repo:     "https://github.com/hareshkumar-dev/Portfolio-Projects",
+    trailblazer: "https://www.salesforce.com/trailblazer/hareshprajapati44",
   };
 
   const GROUP_LABEL = {
@@ -480,6 +491,7 @@
     { label: "GitHub",   href: PROFILE.repo },
     { label: "LinkedIn", href: PROFILE.linkedin },
     { label: "Upwork",   href: PROFILE.upwork },
+    { label: "Trailblazer", href: PROFILE.trailblazer },
   ];
   document.getElementById("foot-links").innerHTML = footLinks
     .map(l => `<a class="btn ghost" href="${l.href}" target="_blank" rel="noopener">${l.label}</a>`).join("");

@@ -6,6 +6,8 @@ runs on live Salesforce data with production-quality UI.
 
 **Live portfolio:** https://hareshkumar-dev.github.io/Portfolio-Projects/ · **Demos:** every project below links to a video walkthrough.
 
+🏅 **Salesforce Certified** — Platform Developer · Platform Foundations · [Trailblazer profile](https://www.salesforce.com/trailblazer/hareshprajapati44)
+
 > **Stack across the repo:** LWC · Apex (triggers, batch, schedulers, Platform Events, state machines) ·
 > custom objects · React (Vite) · Node/Express · jsforce · OAuth 2.0 (PKCE) · SOQL
 
