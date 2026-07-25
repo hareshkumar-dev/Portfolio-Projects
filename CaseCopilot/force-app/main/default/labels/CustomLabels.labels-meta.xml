@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
+    <labels>
+        <fullName>Gemini_Api_Key</fullName>
+        <categories>CaseCopilot</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Gemini API Key</shortDescription>
+        <value>REPLACE_ME_IN_SETUP</value>
+    </labels>
+    <labels>
+        <fullName>Gemini_Model</fullName>
+        <categories>CaseCopilot</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Gemini Model</shortDescription>
+        <value>gemini-flash-latest</value>
+    </labels>
+    <labels>
+        <fullName>Gemini_Endpoint_Path</fullName>
+        <categories>CaseCopilot</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Gemini Endpoint Path</shortDescription>
+        <value>/v1beta/models/gemini-flash-latest:generateContent</value>
+    </labels>
+</CustomLabels>

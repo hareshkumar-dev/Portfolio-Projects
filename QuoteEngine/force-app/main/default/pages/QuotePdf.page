@@ -1,0 +1,118 @@
+<apex:page controller="QuotePdfController" renderAs="pdf" showHeader="false" standardStylesheets="false">
+<head>
+<style>
+    @page { margin: 30px 40px; }
+</style>
+</head>
+<body style="font-family: Arial, Helvetica, sans-serif; color: #16325c; font-size: 12px; margin: 0; padding: 0;">
+
+<apex:outputPanel rendered="{!quote == null}">
+    <p>No quote found for this link.</p>
+</apex:outputPanel>
+
+<apex:outputPanel rendered="{!quote != null}">
+
+    <!-- Brand + doc number -->
+    <table width="100%" cellpadding="0" cellspacing="0" style="border-collapse: collapse;">
+        <tr>
+            <td style="vertical-align: top;">
+                <div style="font-size: 20px; font-weight: bold; color: #0176d3;">QuoteEngine</div>
+                <div style="font-size: 10px; color: #8a97a8; text-transform: uppercase; letter-spacing: 1px; margin-top: 3px;">Configure &#8226; Price &#8226; Quote</div>
+            </td>
+            <td style="vertical-align: top; text-align: right;">
+                <div style="font-size: 11px; color: #8a97a8; text-transform: uppercase; letter-spacing: 1.5px;">Quote</div>
+                <div style="font-size: 26px; font-weight: bold; color: #16325c; margin-top: 2px;">{!quote.Name}</div>
+            </td>
+        </tr>
+    </table>
+
+    <!-- Divider -->
+    <table width="100%" cellpadding="0" cellspacing="0" style="border-collapse: collapse; margin: 16px 0 22px;">
+        <tr><td style="border-bottom: 3px solid #0176d3; font-size: 1px; line-height: 1px;">&#160;</td></tr>
+    </table>
+
+    <!-- Prepared for / status -->
+    <table width="100%" cellpadding="0" cellspacing="0" style="border-collapse: collapse; margin-bottom: 24px;">
+        <tr>
+            <td width="55%" style="vertical-align: top;">
+                <div style="font-size: 9px; color: #8a97a8; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px;">Prepared For</div>
+                <div style="font-size: 15px; font-weight: bold; color: #16325c;">{!quote.Customer_Name__c}</div>
+                <div style="font-size: 11px; color: #54698d; margin-top: 4px;">Quote Date: {!quoteDateFormatted}</div>
+            </td>
+            <td width="45%" style="vertical-align: top; text-align: right;">
+                <div style="font-size: 9px; color: #8a97a8; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px;">Status</div>
+                <apex:outputPanel rendered="{!quote.Status__c == 'Draft'}">
+                    <span style="display: inline-block; padding: 3px 12px; border-radius: 10px; font-size: 11px; font-weight: bold; background-color: #eef1f4; color: #54698d;">Draft</span>
+                </apex:outputPanel>
+                <apex:outputPanel rendered="{!quote.Status__c == 'Pending Approval'}">
+                    <span style="display: inline-block; padding: 3px 12px; border-radius: 10px; font-size: 11px; font-weight: bold; background-color: #fff6e5; color: #8a5300;">Pending Approval</span>
+                </apex:outputPanel>
+                <apex:outputPanel rendered="{!quote.Status__c == 'Approved'}">
+                    <span style="display: inline-block; padding: 3px 12px; border-radius: 10px; font-size: 11px; font-weight: bold; background-color: #eaf7ee; color: #04844b;">Approved</span>
+                </apex:outputPanel>
+                <apex:outputPanel rendered="{!quote.Status__c == 'Rejected'}">
+                    <span style="display: inline-block; padding: 3px 12px; border-radius: 10px; font-size: 11px; font-weight: bold; background-color: #fde3e3; color: #a61c1c;">Rejected</span>
+                </apex:outputPanel>
+            </td>
+        </tr>
+    </table>
+
+    <!-- Line items -->
+    <table width="100%" cellpadding="0" cellspacing="0" style="border-collapse: collapse;">
+        <tr>
+            <th width="46%" style="background-color: #16325c; color: #ffffff; text-align: left; padding: 9px 10px; font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px;">Item</th>
+            <th width="14%" style="background-color: #16325c; color: #ffffff; text-align: right; padding: 9px 10px; font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px;">Qty</th>
+            <th width="18%" style="background-color: #16325c; color: #ffffff; text-align: right; padding: 9px 10px; font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px;">Unit Price</th>
+            <th width="22%" style="background-color: #16325c; color: #ffffff; text-align: right; padding: 9px 10px; font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px;">Line Total</th>
+        </tr>
+        <apex:repeat value="{!lineRows}" var="l">
+            <tr style="{!l.rowStyle}">
+                <td style="padding: 9px 10px; border-bottom: 1px solid #eef1f4; font-size: 12px; font-weight: bold; color: #16325c;">{!l.name}</td>
+                <td style="padding: 9px 10px; border-bottom: 1px solid #eef1f4; font-size: 12px; text-align: right;">{!l.quantity}</td>
+                <td style="padding: 9px 10px; border-bottom: 1px solid #eef1f4; font-size: 12px; text-align: right;">
+                    <apex:outputText value="{0, number, $#,##0.00}"><apex:param value="{!l.unitPrice}"/></apex:outputText>
+                </td>
+                <td style="padding: 9px 10px; border-bottom: 1px solid #eef1f4; font-size: 12px; text-align: right;">
+                    <apex:outputText value="{0, number, $#,##0.00}"><apex:param value="{!l.lineTotal}"/></apex:outputText>
+                </td>
+            </tr>
+        </apex:repeat>
+    </table>
+
+    <!-- Totals -->
+    <table width="100%" cellpadding="0" cellspacing="0" style="border-collapse: collapse; margin-top: 8px;">
+        <tr>
+            <td>
+                <table width="260" cellpadding="0" cellspacing="0" align="right" style="border-collapse: collapse; border: 1px solid #d8e2ec;">
+                    <tr>
+                        <td style="padding: 8px 14px; font-size: 12px; color: #54698d; border-bottom: 1px solid #eef1f4;">Subtotal</td>
+                        <td style="padding: 8px 14px; font-size: 12px; text-align: right; border-bottom: 1px solid #eef1f4;">
+                            <apex:outputText value="{0, number, $#,##0.00}"><apex:param value="{!quote.Subtotal__c}"/></apex:outputText>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 8px 14px; font-size: 12px; color: #54698d; border-bottom: 1px solid #eef1f4;">Discount</td>
+                        <td style="padding: 8px 14px; font-size: 12px; text-align: right; border-bottom: 1px solid #eef1f4;">{!quote.Discount_Percent__c}%</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 11px 14px; font-size: 15px; font-weight: bold; background-color: #0176d3; color: #ffffff;">Total Due</td>
+                        <td style="padding: 11px 14px; font-size: 15px; font-weight: bold; background-color: #0176d3; color: #ffffff; text-align: right;">
+                            <apex:outputText value="{0, number, $#,##0.00}"><apex:param value="{!quote.Total__c}"/></apex:outputText>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+
+    <!-- Footer -->
+    <table width="100%" cellpadding="0" cellspacing="0" style="border-collapse: collapse; margin-top: 50px;">
+        <tr><td style="border-top: 1px solid #e5e5e5; padding-top: 10px; text-align: center; font-size: 9.5px; color: #8a97a8;">
+            <div>This quote is valid for 30 days from the quote date above.</div>
+            <div style="margin-top: 2px;">Generated by QuoteEngine CPQ on {!generatedOnFormatted}</div>
+        </td></tr>
+    </table>
+
+</apex:outputPanel>
+</body>
+</apex:page>

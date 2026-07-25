@@ -1,8 +1,9 @@
-# Salesforce + React — Portfolio (17 Apps)
+# Salesforce + React — Portfolio (22 Apps)
 
-A collection of 17 apps I built on the **Salesforce Platform** — from Lightning Web Components &
-Apex inside the org, to full-stack **React + Node** integrations over the Salesforce API. Every app
-runs on live Salesforce data with production-quality UI.
+A collection of 22 apps I built on the **Salesforce Platform** — from Lightning Web Components &
+Apex inside the org, to full-stack **React + Node** integrations over the Salesforce API, to
+flagship systems combining AI (Gemini), real-time Change Data Capture, custom REST APIs, and
+recurring billing engines. Every app runs on live Salesforce data with production-quality UI.
 
 **Live portfolio:** https://hareshkumar-dev.github.io/Portfolio-Projects/ · **Demos:** every project below links to a video walkthrough.
 
@@ -12,6 +13,17 @@ runs on live Salesforce data with production-quality UI.
 > custom objects · React (Vite) · Node/Express · jsforce · OAuth 2.0 (PKCE) · SOQL
 
 ---
+
+## 🚀 Flagship — AI, real-time, and integration systems
+The most complex builds in this repo — each pushes past a single pattern into a real, multi-part system.
+
+| # | Project | What it does | Demo |
+|---|---------|--------------|------|
+| 21 | **[BillingHub](BillingHub/)** | Subscription billing + RevOps: batch invoicing, dunning-to-suspension, AI churn analysis, live CDC dashboard, approval-gated refunds | [▶](https://youtu.be/j1yAtB5J2ik) |
+| 22 | **[QuoteEngine](QuoteEngine/)** | CPQ-lite quote builder — bundle pricing, volume discount tiers, approval gate, real downloadable PDF | [▶](https://youtu.be/azfDTfFNKp8) |
+| 20 | **[IntegrationHub](IntegrationHub/)** | Externally-callable REST API for order intake with database-level idempotency + live monitoring console | [▶](https://youtu.be/84Wr9SD3XR0) |
+| 19 | **[OpsPulse](OpsPulse/)** | Real-time case ops board — Change Data Capture pushes updates to every open dashboard instantly | [▶](https://youtu.be/GU31cxDjeiY) |
+| 18 | **[CaseCopilot](CaseCopilot/)** | AI case assistant (Google Gemini) — live summarize / draft reply / suggest next action on a Case | [▶](https://youtu.be/0o-2QXtOZJc) |
 
 ## 🌐 Full-Stack — Salesforce + React + Node
 React front ends talking to Salesforce through a Node/Express API (jsforce), with OAuth 2.0 (PKCE) login.

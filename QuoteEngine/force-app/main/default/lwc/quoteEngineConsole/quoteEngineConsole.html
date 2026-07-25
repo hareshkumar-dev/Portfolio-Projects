@@ -1,0 +1,176 @@
+<template>
+    <lightning-card title="Quote Engine — CPQ Console" icon-name="utility:currency">
+        <div class="slds-p-horizontal_medium slds-p-bottom_medium">
+
+            <!-- Quotes list -->
+            <div class="section-header">
+                <p class="section-title">Quotes</p>
+                <lightning-button label="New Quote" variant="brand" icon-name="utility:add" onclick={handleOpenCreateModal}></lightning-button>
+            </div>
+            <template if:true={hasQuotes}>
+                <div class="panel panel_flush">
+                    <div class="table-scroll">
+                        <table class="slds-table slds-table_cell-buffer">
+                            <thead>
+                                <tr class="slds-line-height_reset">
+                                    <th>Quote</th><th>Customer</th><th>Status</th><th>Subtotal</th><th>Discount</th><th>Total</th><th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <template for:each={quoteRows} for:item="q">
+                                    <tr key={q.id} class="quote-row" data-id={q.id} onclick={handleSelectQuote}>
+                                        <td>{q.name}</td>
+                                        <td>{q.customer}</td>
+                                        <td><span class={q.statusClass}>{q.status}</span></td>
+                                        <td>{q.subtotal}</td>
+                                        <td>{q.discount}%</td>
+                        <td>{q.total}</td>
+                                        <td class="col-action">
+                                            <template if:true={q.isApproved}>
+                                                <lightning-button label="View PDF" data-id={q.id} onclick={handleViewPdf}></lightning-button>
+                                            </template>
+                                        </td>
+                                    </tr>
+                                </template>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </template>
+            <template if:false={hasQuotes}>
+                <p class="empty-msg">No quotes yet — create one above.</p>
+            </template>
+
+            <!-- Pending approvals -->
+            <p class="section-title">Pending Approvals</p>
+            <template if:true={hasPending}>
+                <template for:each={pendingRows} for:item="p">
+                    <div key={p.id} class="pending-row">
+                        <div class="pending-info">
+                            <span class="pending-name">{p.name} — {p.customer}</span>
+                            <span class="pending-detail">{p.discount}% discount &#8226; ${p.total}</span>
+                        </div>
+                        <div class="pending-actions">
+                            <lightning-button label="Approve" variant="brand" data-id={p.id} onclick={handleApprove}></lightning-button>
+                            <lightning-button label="Reject" data-id={p.id} onclick={handleReject}></lightning-button>
+                        </div>
+                    </div>
+                </template>
+            </template>
+            <template if:false={hasPending}>
+                <p class="empty-msg">No quotes waiting on approval.</p>
+            </template>
+        </div>
+
+        <!-- Quote details modal -->
+        <template if:true={showModal}>
+            <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open slds-modal_medium">
+                <div class="slds-modal__container">
+                    <header class="slds-modal__header modal-header">
+                        <button class="slds-button slds-button_icon slds-modal__close" title="Close" onclick={handleCloseModal}>
+                            <lightning-icon icon-name="utility:close" size="small"></lightning-icon>
+                            <span class="slds-assistive-text">Close</span>
+                        </button>
+                        <h2 class="slds-text-heading_medium modal-title">{modalQuote.name} — {modalQuote.customer}</h2>
+                        <span class={modalQuote.statusClass}>{modalQuote.status}</span>
+                    </header>
+
+                    <div class="slds-modal__content slds-p-around_medium modal-body">
+                        <div class="stat-row">
+                            <div class="stat-tile">
+                                <p class="stat-value">${modalQuote.subtotal}</p>
+                                <p class="stat-label">Subtotal</p>
+                            </div>
+                            <div class="stat-tile">
+                                <p class="stat-value">{modalQuote.discount}%</p>
+                                <p class="stat-label">Discount</p>
+                            </div>
+                            <div class="stat-tile stat-tile_total">
+                                <p class="stat-value">${modalQuote.total}</p>
+                                <p class="stat-label">Total</p>
+                            </div>
+                        </div>
+
+                        <template if:true={modalQuote.isDraft}>
+                            <p class="section-title">Add Product or Bundle</p>
+                            <div class="toolbar">
+                                <div class="toolbar-field">
+                                    <lightning-combobox label="Product" options={productOptions} onchange={handleProductChange}></lightning-combobox>
+                                </div>
+                                <div class="toolbar-field toolbar-field_narrow">
+                                    <lightning-input type="number" label="Product Qty" value={productQuantity} onchange={handleProductQuantityChange}></lightning-input>
+                                </div>
+                                <div class="toolbar-btn">
+                                    <lightning-button label="Add Product" onclick={handleAddProduct}></lightning-button>
+                                </div>
+                                <div class="toolbar-field">
+                                    <lightning-combobox label="Bundle" options={bundleOptions} onchange={handleBundleChange}></lightning-combobox>
+                                </div>
+                                <div class="toolbar-field toolbar-field_narrow">
+                                    <lightning-input type="number" label="Bundle Qty" value={bundleQuantity} onchange={handleBundleQuantityChange}></lightning-input>
+                                </div>
+                                <div class="toolbar-btn">
+                                    <lightning-button label="Add Bundle" onclick={handleAddBundle}></lightning-button>
+                                </div>
+                            </div>
+                        </template>
+
+                        <p class="section-title">Line Items</p>
+                        <template if:true={hasLines}>
+                            <div class="table-scroll">
+                                <table class="slds-table slds-table_cell-buffer">
+                                    <thead>
+                                        <tr class="slds-line-height_reset"><th>Line</th><th>Qty</th><th>Unit Price</th><th>Line Total</th></tr>
+                                    </thead>
+                                    <tbody>
+                                        <template for:each={lineRows} for:item="l">
+                                            <tr key={l.id}><td>{l.name}</td><td>{l.qty}</td><td>{l.unitPrice}</td><td>{l.total}</td></tr>
+                                        </template>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </template>
+                        <template if:false={hasLines}>
+                            <p class="empty-msg">No lines yet — add a product or bundle above.</p>
+                        </template>
+
+                        <template if:true={canSubmit}>
+                            <lightning-button label="Submit for Approval" variant="brand" class="slds-m-top_medium" onclick={handleSubmit}></lightning-button>
+                        </template>
+                    </div>
+
+                    <footer class="slds-modal__footer">
+                        <template if:true={modalQuote.isApproved}>
+                            <lightning-button label="View PDF" data-id={selectedQuoteId} onclick={handleViewPdf}></lightning-button>
+                        </template>
+                        <lightning-button label="Close" variant="brand" onclick={handleCloseModal}></lightning-button>
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </template>
+
+        <!-- New quote modal -->
+        <template if:true={showCreateModal}>
+            <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open slds-modal_small">
+                <div class="slds-modal__container">
+                    <header class="slds-modal__header modal-header">
+                        <button class="slds-button slds-button_icon slds-modal__close" title="Close" onclick={handleCloseCreateModal}>
+                            <lightning-icon icon-name="utility:close" size="small"></lightning-icon>
+                            <span class="slds-assistive-text">Close</span>
+                        </button>
+                        <h2 class="slds-text-heading_medium modal-title">New Quote</h2>
+                    </header>
+                    <div class="slds-modal__content slds-p-around_medium modal-body">
+                        <lightning-input label="Customer Name" value={customerName} onchange={handleCustomerNameChange}></lightning-input>
+                    </div>
+                    <footer class="slds-modal__footer">
+                        <lightning-button label="Cancel" onclick={handleCloseCreateModal}></lightning-button>
+                        <lightning-button label="Save" variant="brand" onclick={handleCreateQuote}></lightning-button>
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </template>
+    </lightning-card>
+</template>

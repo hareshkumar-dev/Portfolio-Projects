@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <label>Quote Engine User</label>
+    <description>Access to the QuoteEngine CPQ console, its objects, Apex services, and the Quote PDF page.</description>
+    <hasActivationRequired>false</hasActivationRequired>
+
+    <tabSettings>
+        <tab>QuoteEngine_Console</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
+
+    <pageAccesses>
+        <apexPage>QuotePdf</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
+
+    <objectPermissions>
+        <object>Product__c</object>
+        <allowCreate>true</allowCreate>
+        <allowRead>true</allowRead>
+        <allowEdit>true</allowEdit>
+        <allowDelete>false</allowDelete>
+        <viewAllRecords>true</viewAllRecords>
+        <modifyAllRecords>false</modifyAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <object>Bundle__c</object>
+        <allowCreate>true</allowCreate>
+        <allowRead>true</allowRead>
+        <allowEdit>true</allowEdit>
+        <allowDelete>false</allowDelete>
+        <viewAllRecords>true</viewAllRecords>
+        <modifyAllRecords>false</modifyAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <object>Bundle_Item__c</object>
+        <allowCreate>true</allowCreate>
+        <allowRead>true</allowRead>
+        <allowEdit>true</allowEdit>
+        <allowDelete>true</allowDelete>
+        <viewAllRecords>true</viewAllRecords>
+        <modifyAllRecords>false</modifyAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <object>Discount_Tier__c</object>
+        <allowCreate>true</allowCreate>
+        <allowRead>true</allowRead>
+        <allowEdit>true</allowEdit>
+        <allowDelete>false</allowDelete>
+        <viewAllRecords>true</viewAllRecords>
+        <modifyAllRecords>false</modifyAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <object>Quote__c</object>
+        <allowCreate>true</allowCreate>
+        <allowRead>true</allowRead>
+        <allowEdit>true</allowEdit>
+        <allowDelete>false</allowDelete>
+        <viewAllRecords>true</viewAllRecords>
+        <modifyAllRecords>false</modifyAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <object>Quote_Line__c</object>
+        <allowCreate>true</allowCreate>
+        <allowRead>true</allowRead>
+        <allowEdit>true</allowEdit>
+        <allowDelete>true</allowDelete>
+        <viewAllRecords>true</viewAllRecords>
+        <modifyAllRecords>false</modifyAllRecords>
+    </objectPermissions>
+
+    <fieldPermissions><field>Product__c.Description__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+    <fieldPermissions><field>Product__c.Unit_Price__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+    <fieldPermissions><field>Product__c.Category__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+
+    <fieldPermissions><field>Bundle__c.Description__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+    <fieldPermissions><field>Bundle__c.Bundle_Discount_Percent__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+
+    <fieldPermissions><field>Bundle_Item__c.Product__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+    <fieldPermissions><field>Bundle_Item__c.Quantity__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+
+    <fieldPermissions><field>Discount_Tier__c.Min_Quantity__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+    <fieldPermissions><field>Discount_Tier__c.Discount_Percent__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+    <fieldPermissions><field>Discount_Tier__c.Active__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+
+    <fieldPermissions><field>Quote__c.Customer_Name__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+    <fieldPermissions><field>Quote__c.Status__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+    <fieldPermissions><field>Quote__c.Subtotal__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+    <fieldPermissions><field>Quote__c.Discount_Percent__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+    <fieldPermissions><field>Quote__c.Total__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+    <fieldPermissions><field>Quote__c.Approval_Notes__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+
+    <fieldPermissions><field>Quote_Line__c.Product__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+    <fieldPermissions><field>Quote_Line__c.Bundle__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+    <fieldPermissions><field>Quote_Line__c.Line_Name__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+    <fieldPermissions><field>Quote_Line__c.Quantity__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+    <fieldPermissions><field>Quote_Line__c.Unit_Price__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+    <fieldPermissions><field>Quote_Line__c.Line_Total__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+
+    <classAccesses><apexClass>DiscountRuleService</apexClass><enabled>true</enabled></classAccesses>
+    <classAccesses><apexClass>QuoteEngineController</apexClass><enabled>true</enabled></classAccesses>
+    <classAccesses><apexClass>QuotePdfController</apexClass><enabled>true</enabled></classAccesses>
+</PermissionSet>

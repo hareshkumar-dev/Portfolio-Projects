@@ -1,0 +1,63 @@
+<template>
+    <lightning-card title="Ops Pulse — Live Case Board" icon-name="utility:live_chat">
+        <span slot="actions" class={liveClass}>{liveLabel}</span>
+
+        <div class="slds-p-horizontal_medium slds-p-bottom_medium wrapper">
+            <div class="tiles">
+                <template for:each={tiles} for:item="t">
+                    <div key={t.key} class="tile">
+                        <p class="tile-value">{t.value}</p>
+                        <p class="tile-label">{t.label}</p>
+                    </div>
+                </template>
+            </div>
+
+            <div class="board">
+                <div class="board-table">
+                    <div class="table-scroll">
+                        <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                            <thead>
+                                <tr class="slds-line-height_reset">
+                                    <th>Case</th>
+                                    <th>Subject</th>
+                                    <th>Status</th>
+                                    <th>Priority</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <template for:each={rows} for:item="r">
+                                    <tr key={r.id} class="case-row">
+                                        <td>{r.caseNumber}</td>
+                                        <td>{r.subject}</td>
+                                        <td><span class={r.statusClass}>{r.status}</span></td>
+                                        <td><span class={r.prioClass}>{r.priority}</span></td>
+                                    </tr>
+                                </template>
+                            </tbody>
+                        </table>
+                    </div>
+                    <template if:false={hasRows}>
+                        <p class="empty-msg">No open cases right now.</p>
+                    </template>
+                </div>
+
+                <div class="board-feed">
+                    <p class="feed-title">Live Activity</p>
+                    <template if:true={hasFeed}>
+                        <ul class="feed-list">
+                            <template for:each={feed} for:item="f">
+                                <li key={f.key} class="feed-item">
+                                    <span class="feed-label">{f.label}</span>
+                                    <span class="feed-time">{f.time}</span>
+                                </li>
+                            </template>
+                        </ul>
+                    </template>
+                    <template if:false={hasFeed}>
+                        <p class="empty-msg">Waiting for changes…</p>
+                    </template>
+                </div>
+            </div>
+        </div>
+    </lightning-card>
+</template>

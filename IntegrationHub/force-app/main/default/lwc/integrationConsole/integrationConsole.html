@@ -1,0 +1,50 @@
+<template>
+    <lightning-card title="Integration Hub — Order Intake Console" icon-name="utility:connected_apps">
+        <lightning-button slot="actions" label="Refresh" onclick={refresh}></lightning-button>
+
+        <div class="slds-p-horizontal_medium slds-p-bottom_medium">
+            <div class="tiles">
+                <template for:each={tiles} for:item="t">
+                    <div key={t.key} class="tile-col">
+                        <div class={t.theme}>
+                            <p class="kpi-value">{t.value}</p>
+                            <p class="kpi-label">{t.label}</p>
+                        </div>
+                    </div>
+                </template>
+            </div>
+
+            <div class="table-scroll">
+                <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-m-top_medium">
+                    <thead>
+                        <tr class="slds-line-height_reset">
+                            <th class="col-request">Request</th>
+                            <th>Order</th>
+                            <th class="col-method">Method</th>
+                            <th>Status</th>
+                            <th>Outcome</th>
+                            <th class="col-message">Message</th>
+                            <th>When</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <template for:each={rows} for:item="r">
+                            <tr key={r.id}>
+                                <td class="col-request">{r.requestId}</td>
+                                <td>{r.orderId}</td>
+                                <td class="col-method">{r.method}</td>
+                                <td>{r.statusCode}</td>
+                                <td><span class={r.outcomeClass}>{r.outcome}</span></td>
+                                <td class="col-message" title={r.message}>{r.message}</td>
+                                <td>{r.when}</td>
+                            </tr>
+                        </template>
+                    </tbody>
+                </table>
+            </div>
+            <template if:false={hasRows}>
+                <p class="empty-msg">No integration calls logged yet. Send a request to the REST endpoint to see it appear here.</p>
+            </template>
+        </div>
+    </lightning-card>
+</template>

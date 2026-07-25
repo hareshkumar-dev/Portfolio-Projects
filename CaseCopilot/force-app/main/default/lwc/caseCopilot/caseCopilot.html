@@ -1,0 +1,44 @@
+<template>
+    <lightning-card title="Case Copilot" icon-name="utility:einstein">
+        <div class="slds-p-horizontal_medium slds-p-bottom_medium">
+            <div class="slds-grid slds-gutters slds-wrap actions">
+                <div class="slds-col slds-size_1-of-3">
+                    <lightning-button label="Summarize" onclick={handleSummarize} disabled={busy} variant="brand" class="slds-size_1-of-1"></lightning-button>
+                </div>
+                <div class="slds-col slds-size_1-of-3">
+                    <lightning-button label="Draft Reply" onclick={handleDraftReply} disabled={busy} class="slds-size_1-of-1"></lightning-button>
+                </div>
+                <div class="slds-col slds-size_1-of-3">
+                    <lightning-button label="Suggest Next Action" onclick={handleSuggestAction} disabled={busy} class="slds-size_1-of-1"></lightning-button>
+                </div>
+            </div>
+
+            <template if:true={busy}>
+                <div class="slds-align_absolute-center slds-p-vertical_medium">
+                    <lightning-spinner alternative-text={busyLabel} size="small"></lightning-spinner>
+                    <span class="slds-p-left_small busy-label">{busyLabel}</span>
+                </div>
+            </template>
+
+            <template if:true={hasResponse}>
+                <div class="response-panel">
+                    <p class="response-label">{responseType}</p>
+                    <p class="response-text">{response}</p>
+                </div>
+            </template>
+
+            <template if:true={hasHistory}>
+                <div class="history-panel">
+                    <p class="history-title">Recent AI activity</p>
+                    <template for:each={history} for:item="h">
+                        <div key={h.id} class="history-row">
+                            <span class="history-type">{h.type}</span>
+                            <span class="history-when">{h.when}</span>
+                            <p class="history-text">{h.response}</p>
+                        </div>
+                    </template>
+                </div>
+            </template>
+        </div>
+    </lightning-card>
+</template>

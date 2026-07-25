@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Bundle__c</fullName>
+    <label>Bundle</label>
+    <type>Lookup</type>
+    <referenceTo>Bundle__c</referenceTo>
+    <relationshipLabel>Quote Lines</relationshipLabel>
+    <relationshipName>Quote_Lines</relationshipName>
+    <deleteConstraint>SetNull</deleteConstraint>
+</CustomField>

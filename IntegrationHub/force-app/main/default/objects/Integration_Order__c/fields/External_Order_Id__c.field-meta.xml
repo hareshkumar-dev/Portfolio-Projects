@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>External_Order_Id__c</fullName>
+    <label>External Order Id</label>
+    <type>Text</type>
+    <length>60</length>
+    <required>true</required>
+    <unique>true</unique>
+    <externalId>true</externalId>
+    <description>Idempotency key supplied by the calling system — used to detect and safely ignore duplicate deliveries.</description>
+</CustomField>

@@ -1,0 +1,96 @@
+<template>
+    <lightning-card title="RevOps Console — Billing &amp; Revenue Operations" icon-name="utility:money">
+        <span slot="actions" class={liveClass}>{liveLabel}</span>
+        <lightning-button-icon slot="actions" icon-name="utility:refresh" alternative-text="Refresh" title="Refresh" variant="border-filled" class="refresh-btn" onclick={handleRefresh} disabled={refreshing}></lightning-button-icon>
+
+        <div class="slds-p-horizontal_medium slds-p-bottom_medium">
+            <!-- KPI tiles -->
+            <div class="tiles">
+                <template for:each={tiles} for:item="t">
+                    <div key={t.key} class="tile">
+                        <p class="tile-value">{t.value}</p>
+                        <p class="tile-label">{t.label}</p>
+                    </div>
+                </template>
+            </div>
+
+            <!-- Live invoice board -->
+            <p class="section-title">Live Invoice Board</p>
+            <div class="table-scroll">
+                <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                    <thead>
+                        <tr class="slds-line-height_reset">
+                            <th>Invoice</th>
+                            <th>Customer</th>
+                            <th>Amount</th>
+                            <th>Status</th>
+                            <th>Attempts</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <template for:each={invoiceRows} for:item="inv">
+                            <tr key={inv.id}>
+                                <td>{inv.name}</td>
+                                <td>{inv.customer}</td>
+                                <td>{inv.amount}</td>
+                                <td><span class={inv.statusClass}>{inv.status}</span></td>
+                                <td>{inv.attempts}</td>
+                            </tr>
+                        </template>
+                    </tbody>
+                </table>
+            </div>
+            <template if:false={hasInvoices}>
+                <p class="empty-msg">No invoices yet. Run the billing batch to generate some.</p>
+            </template>
+
+            <!-- Pending refunds -->
+            <p class="section-title">Pending Refund Approvals</p>
+            <template if:true={hasRefunds}>
+                <template for:each={refundRows} for:item="r">
+                    <div key={r.id} class="refund-row">
+                        <div class="refund-info">
+                            <span class="refund-name">{r.name}</span>
+                            <span class="refund-invoice">Invoice {r.invoice}</span>
+                            <span class="refund-amount">${r.amount}</span>
+                            <p class="refund-reason">{r.reason}</p>
+                        </div>
+                        <div class="refund-actions">
+                            <lightning-button label="Approve" variant="brand" data-id={r.id} onclick={handleApproveRefund}></lightning-button>
+                            <lightning-button label="Reject" data-id={r.id} onclick={handleRejectRefund}></lightning-button>
+                        </div>
+                    </div>
+                </template>
+            </template>
+            <template if:false={hasRefunds}>
+                <p class="empty-msg">No refund requests waiting on approval.</p>
+            </template>
+
+            <!-- Canceled subscriptions / churn risk -->
+            <p class="section-title">Canceled Subscriptions — Churn Risk</p>
+            <template if:true={hasCanceled}>
+                <template for:each={canceledRows} for:item="c">
+                    <div key={c.id} class="churn-row">
+                        <div class="churn-info">
+                            <span class="churn-name">{c.customer} · {c.plan}</span>
+                            <p class="churn-reason">{c.cancelReason}</p>
+                        </div>
+                        <template if:false={c.hasInsight}>
+                            <lightning-button label="Analyze Churn Risk" data-id={c.id} onclick={handleAnalyzeChurn} disabled={c.busy}></lightning-button>
+                        </template>
+                        <template if:true={c.hasInsight}>
+                            <div class="insight-panel">
+                                <span class={c.riskClass}>{c.riskLevel} Risk</span>
+                                <p class="insight-analysis">{c.analysis}</p>
+                                <p class="insight-action">→ {c.action}</p>
+                            </div>
+                        </template>
+                    </div>
+                </template>
+            </template>
+            <template if:false={hasCanceled}>
+                <p class="empty-msg">No canceled subscriptions.</p>
+            </template>
+        </div>
+    </lightning-card>
+</template>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Invoice__c</fullName>
+    <label>Invoice</label>
+    <type>Lookup</type>
+    <referenceTo>Invoice__c</referenceTo>
+    <relationshipLabel>Payment Event Logs</relationshipLabel>
+    <relationshipName>Payment_Event_Logs</relationshipName>
+    <deleteConstraint>SetNull</deleteConstraint>
+</CustomField>

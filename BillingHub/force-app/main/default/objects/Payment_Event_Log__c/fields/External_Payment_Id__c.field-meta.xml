@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>External_Payment_Id__c</fullName>
+    <label>External Payment Id</label>
+    <type>Text</type>
+    <length>60</length>
+    <required>true</required>
+    <unique>true</unique>
+    <externalId>true</externalId>
+    <description>Idempotency key from the payment processor — detects and safely ignores duplicate webhook deliveries.</description>
+</CustomField>

@@ -9,6 +9,16 @@ Drop images in each project's `screenshots/` folder and video in `recording/`.
 
 ---
 
+## Tier 0 — Flagship capstones (most complex, live-verified — lead with these)
+
+| # | Project | Console | Signature element to capture | Status |
+|---|---------|---------|------------------------------|--------|
+| 18 | **CaseCopilot** | Case Copilot (on Case page) | Click Summarize/Draft Reply/Suggest Action → real AI response appears; history panel fills in | ✅ deployed + live AI verified |
+| 19 | **OpsPulse** | Ops Pulse | Two browser tabs side by side — edit a Case in one, watch it update instantly in the other with no refresh | ✅ deployed |
+| 20 | **IntegrationHub** | Integration Hub Console | Send a POST via Postman/curl → watch the KPI tiles and log table update live with the result | ✅ deployed + live REST calls verified |
+| 21 | **BillingHub** | RevOps Console | MRR tile, live invoice board, a refund approval action, and the AI churn-risk panel on a canceled subscription | ✅ deployed + live dunning lifecycle verified |
+| 22 | **QuoteEngine** | Quote Engine Console | Add a bundle + product to a quote, watch subtotal/discount/total compute live, then click "View PDF" for the real document | ✅ deployed + live quote verified |
+
 ## Tier 1 — Lead with these (enterprise solution architecture)
 
 | # | Project | Console | Signature element to capture | Status |

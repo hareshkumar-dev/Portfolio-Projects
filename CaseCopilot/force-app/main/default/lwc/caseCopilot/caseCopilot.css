@@ -1,0 +1,60 @@
+.actions {
+    margin-bottom: 0.75rem;
+}
+.busy-label {
+    color: #54698d;
+    font-size: 0.8125rem;
+}
+.response-panel {
+    margin-top: 0.75rem;
+    padding: 0.75rem 1rem;
+    background: #f4f8fb;
+    border: 1px solid #d8e2ec;
+    border-left: 3px solid #0176d3;
+    border-radius: 0.25rem;
+}
+.response-label {
+    font-size: 0.6875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #0176d3;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+}
+.response-text {
+    white-space: pre-wrap;
+    color: #16325c;
+    font-size: 0.8125rem;
+    line-height: 1.5;
+}
+.history-panel {
+    margin-top: 1rem;
+    border-top: 1px solid #e5e5e5;
+    padding-top: 0.75rem;
+}
+.history-title {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #54698d;
+    margin-bottom: 0.5rem;
+}
+.history-row {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #f3f3f3;
+}
+.history-type {
+    font-size: 0.6875rem;
+    font-weight: 700;
+    color: #0176d3;
+    margin-right: 0.5rem;
+}
+.history-when {
+    font-size: 0.6875rem;
+    color: #706e6b;
+}
+.history-text {
+    font-size: 0.75rem;
+    color: #3e3e3c;
+    margin-top: 0.25rem;
+    white-space: pre-wrap;
+}

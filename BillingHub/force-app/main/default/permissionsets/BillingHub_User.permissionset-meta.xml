@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <label>Billing Hub User</label>
+    <description>Access to the BillingHub subscription, invoice, payment, refund, and churn-insight objects, the RevOps console, and its Apex services.</description>
+    <hasActivationRequired>false</hasActivationRequired>
+
+    <tabSettings>
+        <tab>RevOps_Console</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
+
+    <objectPermissions>
+        <object>Subscription__c</object>
+        <allowCreate>true</allowCreate>
+        <allowRead>true</allowRead>
+        <allowEdit>true</allowEdit>
+        <allowDelete>false</allowDelete>
+        <viewAllRecords>true</viewAllRecords>
+        <modifyAllRecords>false</modifyAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <object>Invoice__c</object>
+        <allowCreate>true</allowCreate>
+        <allowRead>true</allowRead>
+        <allowEdit>true</allowEdit>
+        <allowDelete>false</allowDelete>
+        <viewAllRecords>true</viewAllRecords>
+        <modifyAllRecords>false</modifyAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <object>Payment_Event_Log__c</object>
+        <allowCreate>true</allowCreate>
+        <allowRead>true</allowRead>
+        <allowEdit>false</allowEdit>
+        <allowDelete>false</allowDelete>
+        <viewAllRecords>true</viewAllRecords>
+        <modifyAllRecords>false</modifyAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <object>Churn_Insight__c</object>
+        <allowCreate>true</allowCreate>
+        <allowRead>true</allowRead>
+        <allowEdit>false</allowEdit>
+        <allowDelete>false</allowDelete>
+        <viewAllRecords>true</viewAllRecords>
+        <modifyAllRecords>false</modifyAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <object>Refund_Request__c</object>
+        <allowCreate>true</allowCreate>
+        <allowRead>true</allowRead>
+        <allowEdit>true</allowEdit>
+        <allowDelete>false</allowDelete>
+        <viewAllRecords>true</viewAllRecords>
+        <modifyAllRecords>false</modifyAllRecords>
+    </objectPermissions>
+
+    <fieldPermissions><field>Subscription__c.Customer_Name__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+    <fieldPermissions><field>Subscription__c.Plan_Name__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+    <fieldPermissions><field>Subscription__c.Monthly_Amount__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+    <fieldPermissions><field>Subscription__c.Billing_Cycle_Day__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+    <fieldPermissions><field>Subscription__c.Status__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+    <fieldPermissions><field>Subscription__c.Next_Billing_Date__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+    <fieldPermissions><field>Subscription__c.Start_Date__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+    <fieldPermissions><field>Subscription__c.Cancel_Reason__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+
+    <fieldPermissions><field>Invoice__c.Subscription__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+    <fieldPermissions><field>Invoice__c.Amount__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+    <fieldPermissions><field>Invoice__c.Status__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+    <fieldPermissions><field>Invoice__c.Due_Date__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+    <fieldPermissions><field>Invoice__c.Paid_Date__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+    <fieldPermissions><field>Invoice__c.Attempt_Count__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+    <fieldPermissions><field>Invoice__c.Last_Retry_At__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+
+    <fieldPermissions><field>Payment_Event_Log__c.Invoice__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+    <fieldPermissions><field>Payment_Event_Log__c.Outcome__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+    <fieldPermissions><field>Payment_Event_Log__c.Amount__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+    <fieldPermissions><field>Payment_Event_Log__c.Message__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+    <fieldPermissions><field>Payment_Event_Log__c.Logged_At__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+
+    <fieldPermissions><field>Churn_Insight__c.Subscription__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+    <fieldPermissions><field>Churn_Insight__c.Risk_Level__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+    <fieldPermissions><field>Churn_Insight__c.Analysis__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+    <fieldPermissions><field>Churn_Insight__c.Recommended_Action__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+
+    <fieldPermissions><field>Refund_Request__c.Invoice__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+    <fieldPermissions><field>Refund_Request__c.Amount__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+    <fieldPermissions><field>Refund_Request__c.Reason__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+    <fieldPermissions><field>Refund_Request__c.Approval_Status__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+    <fieldPermissions><field>Refund_Request__c.Decision_Notes__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+
+    <classAccesses><apexClass>SubscriptionBillingBatch</apexClass><enabled>true</enabled></classAccesses>
+    <classAccesses><apexClass>PaymentWebhookService</apexClass><enabled>true</enabled></classAccesses>
+    <classAccesses><apexClass>DunningRetryQueueable</apexClass><enabled>true</enabled></classAccesses>
+    <classAccesses><apexClass>ChurnInsightService</apexClass><enabled>true</enabled></classAccesses>
+    <classAccesses><apexClass>GeminiCalloutService</apexClass><enabled>true</enabled></classAccesses>
+    <classAccesses><apexClass>RevOpsController</apexClass><enabled>true</enabled></classAccesses>
+</PermissionSet>
